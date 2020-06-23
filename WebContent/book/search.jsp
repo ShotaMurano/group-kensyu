@@ -14,18 +14,18 @@
 
     <hr>
 
-    <form action="index.html" method="post">
+    <form action="/group-kenshu/BookManageServlet" method="post">
       <p>
-      ID 　　　　　　　：<input type="text" name="" value=""><br>
-      ISBN　　　　　　：<input type="text" name="" value=""><br>
-      資料名 　　　　　：<input type="text" name="" value=""><br>
-      分類コード　　　 ：<input type="text" name="" value=""><br>
-      著者　　　　　　 ：<input type="text" name="" value=""><br>
-      出版社　　　　　 ：<input type="text" name="" value=""><br>
-      出版日　　　　　 ：<input type="text" name="" value=""><br>
+      ID 　　　　　　　：<input type="text" name="id" value=""><br>
+      ISBN　　　　　　：<input type="text" name="isbn" value=""><br>
+      資料名 　　　　　：<input type="text" name="name" value=""><br>
+      分類コード　　　 ：<input type="text" name="classId" value=""><br>
+      著者　　　　　　 ：<input type="text" name="author" value=""><br>
+      出版社　　　　　 ：<input type="text" name="publisher" value=""><br>
+      出版日　　　　　 ：<input type="text" name="releaseDate" value=""><br>
 
       <br><br>
-      <input type="submit" name="" value="検索"><br>
+      <input type="submit" name="search" value="検索"><br>
     </form>
 
 
