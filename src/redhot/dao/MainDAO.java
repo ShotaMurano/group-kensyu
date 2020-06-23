@@ -102,9 +102,8 @@ public class MainDAO {
 	}
 
 	public String getBookStatus(int stock_id) throws DAOException {
-		String sql = "SELECT * FROM stock where id=?";
+		String sql = "SELECT status FROM stock where id=?";
 
-		@SuppressWarnings("unused")
 		String book_status = null;
 
 		ResultSet rs = null;
