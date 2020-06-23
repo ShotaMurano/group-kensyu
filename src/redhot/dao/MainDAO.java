@@ -101,8 +101,30 @@ public class MainDAO {
 		return true;
 	}
 
-	public String getBookStatus(int stockid) {
-		this.stockid = id;
-		return "hello";
+	public String getBookStatus(int stock_id) throws DAOException {
+		String sql = "SELECT * FROM stock where id=?";
+
+		@SuppressWarnings("unused")
+		String book_status = null;
+
+		ResultSet rs = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setInt(1, stock_id);
+			rs = st.executeQuery();
+			rs.next();
+			book_status = rs.getString("status");
+			return book_status;
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
 	}
 }

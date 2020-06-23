@@ -27,11 +27,11 @@ class MainDAOTest extends MainDAO {
 	//		Assertions.assertEquals(true, dao.isLate());
 	//	}
 
-	@Test
-	void test2() {
-		MainDAO dao = new MainDAO();
-		Assertions.assertEquals("hello", dao.getBookStatus(111));
-	}
+	//	@Test
+	//	void test2() {
+	//		MainDAO dao = new MainDAO();
+	//		Assertions.assertEquals("hello", dao.getBookStatus(111));
+	//	}
 
 	@Test
 	@DisplayName("貸出数を取得できるかの確認（ユーザID 1番の人）")
@@ -109,6 +109,44 @@ class MainDAOTest extends MainDAO {
 			e.printStackTrace();
 		}
 		return;
+	}
+
+	@Test
+	@DisplayName("本のステータスを取得できるかの確認（Stockテーブルのステ‐タスが'exist'の場合）")
+	void test9() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals("exist", dao.getBookStatus(1));
+		} catch (DAOException e) {
+			fail();
+			e.printStackTrace();
+		}
+		return;
+	}
+
+	@Test
+	@DisplayName("本のステータスを取得できるかの確認（Stockテーブルのステ‐タスが'none'の場合）")
+	void test10() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals("none", dao.getBookStatus(5));
+		} catch (DAOException e) {
+			fail();
+			e.printStackTrace();
+		}
+		return;
+	}
+
+	@Test
+	@DisplayName("本のステータスを取得できるかの確認（StockIDがなかった場合）")
+	void test11() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals("", dao.getBookStatus(6));
+		} catch (DAOException e) {
+			return;
+		}
+		fail();
 	}
 
 }
