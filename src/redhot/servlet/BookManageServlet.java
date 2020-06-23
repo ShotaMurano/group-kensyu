@@ -41,9 +41,6 @@ public class BookManageServlet extends HttpServlet {
 		BookManageDAO dao = new BookManageDAO();
 //		List<BookBean> list = dao.findAll();
 
-
-
-
 	}
 
 }
