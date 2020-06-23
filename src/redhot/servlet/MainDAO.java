@@ -6,10 +6,11 @@ import java.sql.DriverManager;
 public class MainDAO {
 
 	private Connection con;
-	private String sql;
 	final private String url = "jdbc:postgresql:webbook";
 	final private String user = "student";
 	final private String pass = "himitu";
+	private int id;
+	private int stockid;
 
 	protected Connection getConnection() throws DAOException {
 		if (con != null) {
@@ -24,4 +25,22 @@ public class MainDAO {
 		}
 	}
 
+	public int getBorrowNum(int id) {
+		this.id = id;
+		return this.id;
+	}
+
+	public int getPreorderNum(int id) {
+		this.id = id;
+		return this.id;
+	}
+
+	public boolean isLate() {
+		return true;
+	}
+
+	public String getBookStatus(int stockid) {
+		this.stockid = id;
+		return "hello";
+	}
 }
