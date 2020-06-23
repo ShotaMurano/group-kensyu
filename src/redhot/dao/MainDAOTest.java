@@ -1,4 +1,4 @@
-package redhot.servlet;
+package redhot.dao;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

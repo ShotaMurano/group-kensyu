@@ -1,4 +1,4 @@
-package redhot.servlet;
+package redhot.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redhot.bean.MemberBean;
-import redhot.servlet.DAOException;
 
 public class MemberDAO {
 
