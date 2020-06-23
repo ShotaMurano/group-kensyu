@@ -69,6 +69,33 @@ public class MainDAO {
 		}
 	}
 
+	//ユーザIDを入れて、予約している本の数を返す
+	public int getPreorderNum(int id) throws DAOException {
+		String sql = "SELECT * FROM preorder where user_id=?";
+		int count = 0;
+		ResultSet rs = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			while (rs.next()) {
+				count++;
+			}
+			return count;
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+
+	}
+
 	//ユーザの延滞があるかを
 	public boolean isLate(int id) {
 		return true;

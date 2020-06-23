@@ -72,4 +72,43 @@ class MainDAOTest extends MainDAO {
 		return;
 	}
 
+	@Test
+	@DisplayName("予約数を取得できるかの確認（ユーザID 1番の人）")
+	void test6() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals(1, dao.getPreorderNum(1));
+		} catch (DAOException e) {
+			fail();
+			e.printStackTrace();
+		}
+		return;
+	}
+
+	@Test
+	@DisplayName("予約数を取得できるかの確認（ユーザIDがない人）")
+	void test7() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals(0, dao.getPreorderNum(2));
+		} catch (DAOException e) {
+			fail();
+			e.printStackTrace();
+		}
+		return;
+	}
+
+	@Test
+	@DisplayName("予約数を取得できるかの確認（ユーザIDがマイナスの人）")
+	void test8() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals(0, dao.getPreorderNum(-1));
+		} catch (DAOException e) {
+			fail();
+			e.printStackTrace();
+		}
+		return;
+	}
+
 }
