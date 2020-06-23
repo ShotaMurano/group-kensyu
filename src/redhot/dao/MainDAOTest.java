@@ -2,6 +2,10 @@ package redhot.dao;
 
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +42,7 @@ class MainDAOTest extends MainDAO {
 	void test3() {
 		MainDAO dao = new MainDAO();
 		try {
-			Assertions.assertEquals(3, dao.getBorrowNum(1));
+			Assertions.assertEquals(5, dao.getBorrowNum(1));
 		} catch (DAOException e) {
 			fail();
 			e.printStackTrace();
@@ -142,11 +146,77 @@ class MainDAOTest extends MainDAO {
 	void test11() {
 		MainDAO dao = new MainDAO();
 		try {
-			Assertions.assertEquals("", dao.getBookStatus(6));
+			Assertions.assertEquals("", dao.getBookStatus(7));
 		} catch (DAOException e) {
 			return;
 		}
 		fail();
 	}
+
+	@Test
+	@DisplayName("Dateで今日の日付（yyyy-MM-dd）を取得できるかの確認")
+	void test12() {
+		Date today = new Date();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = dateFormat.format(today);
+		Assertions.assertEquals("2020-06-23", formattedDate);
+	}
+
+	@Test
+	@DisplayName("本のステータスを取得できるかの確認（StockIDがなかった場合)")
+	void test13() {
+		Date today = new Date();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = dateFormat.format(today);
+		Assertions.assertEquals("2020-06-23", formattedDate);
+	}
+
+	@Test
+	@DisplayName("本の延滞がない場合、falseが返されるかを確認")
+	void test14() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals(false, dao.isLate(1));
+		} catch (DAOException e) {
+			fail();
+		}
+		return;
+	}
+
+	@Test
+	@DisplayName("本の延滞がある場合、trueが返されるかを確認")
+	void test15() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals(true, dao.isLate(4));
+		} catch (DAOException e) {
+			fail();
+		}
+		return;
+	}
+
+	@Test
+	@DisplayName("返却日と今日の日付が同じ場合、trueとfalseどちらが返されるかを確認")
+	void test16() {
+		MainDAO dao = new MainDAO();
+		try {
+			Assertions.assertEquals(false, dao.isLate(5));
+		} catch (DAOException e) {
+			fail();
+		}
+		return;
+	}
+
+	//	@Test
+	//	@DisplayName("")
+	//	void test15() {
+	//		MainDAO dao = new MainDAO();
+	//		try {
+	//			Assertions.assertEquals("2020-06-23", dao.returnDate(1));
+	//		} catch (DAOException e) {
+	//			fail();
+	//		}
+	//		return;
+	//	}
 
 }
