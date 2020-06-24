@@ -14,7 +14,7 @@
 
     <hr>
 
-    <form action="/group-kenshu/BookManageServlet" method="post">
+    <form action="/group-kenshu/redhot.servlet/BookManageServlet" method="post">
       <p>
       ID 　　　　　　　：<input type="text" name="id" value=""><br>
       ISBN　　　　　　：<input type="text" name="isbn" value=""><br>

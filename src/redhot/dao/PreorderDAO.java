@@ -2,6 +2,9 @@ package redhot.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import redhot.tool.UniversalTool;
 
 public class PreorderDAO extends MainDAO {
 
@@ -10,18 +13,25 @@ public class PreorderDAO extends MainDAO {
 	}
 
 	public int addPreorderQueue(int stockId, int userId) throws DAOException {
-		String sql = "INSERT INTO preorder(stock_id, user_id) VALUES(?,?)";
+		if (UniversalTool.isUserUsable(getBorrowNum(userId), getPreorderNum(userId))) {
 
-		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement(sql);) {
-			st.setInt(1, stockId);
-			st.setInt(2, userId);
+			String sql = "INSERT INTO preorder(stock_id, user_id) VALUES(?,?)";
 
-			int rows = st.executeUpdate();
-			return rows;
+			try (Connection con = getConnection();
+					PreparedStatement st = con.prepareStatement(sql);) {
+				st.setInt(1, stockId);
+				st.setInt(2, userId);
 
-		} catch (Exception e) {
-			throw new DAOException("リソースの開放に失敗しました。", e);
+				int rows = st.executeUpdate();
+				return rows;
+
+			} catch (SQLException e) {
+				throw new DAOException("存在しない書籍、ユーザIDです。", e);
+			} catch (Exception e) {
+				throw new DAOException("リソースの開放に失敗しました。", e);
+			}
+		} else {
+			return 0;
 		}
 	}
 
