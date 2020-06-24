@@ -3,11 +3,15 @@ package redhot.dao;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+
+import redhot.bean.BorrowBean;
 
 public class BookManageDAOTest {
 	//
@@ -60,7 +64,7 @@ public class BookManageDAOTest {
 		LocalDateTime l_date = ldt.plusDays(10);
 		Date date3 = Date.from(l_date.toInstant(ZoneId.systemDefault().getRules().getOffset(l_date)));
 		String day_later10_format = dateFormat.format(date3);
-		Assertions.assertEquals("2020-07-04", day_later10_format);
+		Assertions.assertEquals("2020-07-05", day_later10_format);
 	}
 
 	//	@Test
@@ -138,5 +142,27 @@ public class BookManageDAOTest {
 	//		Assertions.assertEquals(39, list.get(3).getId());
 	//		Assertions.assertEquals(40, list.get(4).getId());
 	//	}
+
+	//	@Test
+	//	@DisplayName("返却した本の貸出IDを取得できるかの確認")
+	//	public void test7() throws DAOException {
+	//		BookManageDAO dao = new BookManageDAO();
+	//		List<String> book_id = new ArrayList<String>();
+	//		book_id.add("5");
+	//		int member_id = 1;
+	//		List<BorrowBean> list = dao.returnBook(member_id, book_id);
+	//		Assertions.assertEquals(77, list.get(0).getId());
+	//	}
+
+	@Test
+	@DisplayName("本の資料IDが1つも一致しなかったときにListのサイズが0になるかを確認")
+	public void test8() throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		List<String> book_id = new ArrayList<String>();
+		book_id.add("5");
+		int member_id = 1;
+		List<BorrowBean> list = dao.returnBook(member_id, book_id);
+		Assertions.assertEquals(0, list.size());
+	}
 
 }

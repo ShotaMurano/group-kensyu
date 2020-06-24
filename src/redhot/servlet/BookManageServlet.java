@@ -137,6 +137,28 @@ public class BookManageServlet extends HttpServlet {
 					gotoPage(request, response, "/book/error_rental.jsp");
 				}
 
+				// 返却のとき
+			} else if (action.equals("return")) {
+				List<String> book_id = new ArrayList<String>();
+				String status = null; //getBookStatusの返り値を格納する
+				for (int i = 0; i < 5; i++) {
+					if ("".equals(request.getParameter("book_id_" + (i + 1) + ""))) {
+					} else {
+						status = dao.getBookStatus(Integer.parseInt(request.getParameter("book_id_" + (i + 1) + "")));
+						if ("borrow".equals(status)) {
+							book_id.add(request.getParameter("book_id_" + (i + 1) + ""));
+						}
+					}
+				}
+				int member_id = Integer.parseInt(request.getParameter("member_id"));
+				if (book_id.size() != 0) {
+					List<BorrowBean> list = dao.returnBook(member_id, book_id);
+					request.setAttribute("items", list);
+					gotoPage(request, response, "/book/returnResults.jsp");
+				} else {
+					gotoPage(request, response, "/book/error_return.jsp");
+				}
+
 				// 追加のとき
 			}
 		} catch (DAOException e) {
