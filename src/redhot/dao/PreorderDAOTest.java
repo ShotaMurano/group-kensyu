@@ -9,12 +9,25 @@ import org.junit.jupiter.api.Test;
 class PreorderDAOTest extends MainDAO {
 
 	@Test
-	@DisplayName("引数の戻り確認")
+	@DisplayName("書籍の合計が5冊以上の場合は借りられない。")
 	void test() {
 		PreorderDAO dao;
 		try {
 			dao = new PreorderDAO();
-			Assertions.assertEquals(dao.addPreorderQueue(1, 1), 1);
+			Assertions.assertEquals(dao.addPreorderQueue(2, 1), 0);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	@DisplayName("書籍の合計が5冊以上の場合は借りられない。")
+	void test2() {
+		PreorderDAO dao;
+		try {
+			dao = new PreorderDAO();
+			Assertions.assertEquals(dao.addPreorderQueue(2, 1), 0);
 		} catch (DAOException e) {
 			e.printStackTrace();
 			fail();

@@ -31,6 +31,7 @@ public class BookManageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			//会員と管理画面でのIDの使い分けをどうするか
 			HttpSession session = request.getSession(false);
 			request.setCharacterEncoding("UTF-8");
 			// パラメータ解析
@@ -39,15 +40,14 @@ public class BookManageServlet extends HttpServlet {
 
 			// 検索のとき
 			if (action.equals("search")) {
-				//			int id = Integer.parseInt(request.getParameter("id"));
 				String isbn = request.getParameter("isbn");
-				//			String name = request.getParameter("name");
-				//			int classId = Integer.parseInt(request.getParameter("classId"));
-				//			String author = request.getParameter("author");
-				//			String publisher = request.getParameter("publisher");
-				//			java.sql.Date releaseDate = Integer.parseInt(request.getParameter("releaseDate");
+				String name = request.getParameter("name");
+				String classId = request.getParameter("classId");
+				String author = request.getParameter("author");
+				String publisher = request.getParameter("publisher");
+				String releaseDate = request.getParameter("releaseDate");
 				// とりあえずISBN番号のみの検索に対応
-				List<StockBean> list = dao.searchBook(isbn);
+				List<StockBean> list = dao.searchBook(isbn, name, classId, author, publisher, releaseDate);
 				// リストをリクエストスコープに入れてjspへフォワードする
 				request.setAttribute("items", list);
 				gotoPage(request, response, "/book/searchResults.jsp");

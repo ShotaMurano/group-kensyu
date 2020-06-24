@@ -17,9 +17,6 @@ public class MainDAO {
 	final private String pass = "himitu";
 
 	protected Connection getConnection() throws DAOException {
-		if (con != null) {
-			return con;
-		}
 		try {
 			Class.forName("org.postgresql.Driver");
 			con = DriverManager.getConnection(url, user, pass);

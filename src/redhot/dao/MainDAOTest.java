@@ -42,7 +42,7 @@ class MainDAOTest extends MainDAO {
 	void test3() {
 		MainDAO dao = new MainDAO();
 		try {
-			Assertions.assertEquals(5, dao.getBorrowNum(1));
+			Assertions.assertEquals(4, dao.getBorrowNum(1));
 		} catch (DAOException e) {
 			fail();
 			e.printStackTrace();

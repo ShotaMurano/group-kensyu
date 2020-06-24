@@ -10,7 +10,6 @@ import redhot.bean.BookBean;
 import redhot.bean.StockBean;
 
 public class BookManageDAO extends MainDAO {
-	private Connection con;
 
 	public BookManageDAO() throws DAOException {
 		getConnection();
@@ -18,82 +17,103 @@ public class BookManageDAO extends MainDAO {
 
 	//	public List searchBook(int isbn, String name , int classId, String author,
 	//			String publisher, java.sql.Date releaseDate) throws DAOException {
-	public List<StockBean> searchBook(String isbn) throws DAOException {
-		Connection con = super.getConnection();
+	public List<StockBean> searchBook(String isbn, String name, String classId,
+			String author, String publisher,
+			String releaseDate) throws DAOException {
 
-		PreparedStatement st1 = null;
-		PreparedStatement st2 = null;
-		ResultSet rs1 = null;
-		ResultSet rs2 = null;
+		// Bookテーブルに実行するSQL文
+		String sqlSelectFromBook = "select * from book";
+		ArrayList<String> whereList = new ArrayList<String>();
+		ArrayList<String> valueList = new ArrayList<String>();
+		ArrayList<Integer> valueIntList = new ArrayList<Integer>();
 
-		try {
-			// Bookテーブルに実行するSQL文
-			String sql1 = "select * from book where isbn = ? ";
-			// Stockテーブルに実行するSQL文
-			String sql2 = "select * from stock where  book_isbn = ? ";
-			st1 = con.prepareStatement(sql1);
-			st2 = con.prepareStatement(sql2);
+		if (!"".equals(isbn)) {
+			whereList.add("isbn = ?");
+			valueList.add(isbn);
+		}
+		if (!"".equals(name)) {
+			whereList.add("name = ?");
+			valueList.add(name);
+		}
+		if (!"".equals(author)) {
+			whereList.add("author = ?");
+			valueList.add(author);
+		}
+		if (!"".equals(publisher)) {
+			whereList.add("publisher = ?");
+			valueList.add(publisher);
+		}
+		if (!"".equals(releaseDate)) {
+			whereList.add("releaseDate = ?");
+			valueList.add(releaseDate);
+		}
+		if (!"".equals(classId)) {
+			whereList.add("class_id = ?");
+			valueIntList.add(Integer.valueOf(classId));
+		}
 
-			//BookテーブルのSQL文に値の設定
-			st1.setString(1, isbn);
-			// SQL実行
-			rs1 = st1.executeQuery();
+		if (whereList != null || whereList.size() != 0) {
+			sqlSelectFromBook += " WHERE " + String.join(" AND ", whereList);
+		}
 
-			// Bookテーブルの検索結果から対象レコードのISBN番号を取得、
-			// 取得したISBN番号でStockテーブルにSQL文実行
-			//			List<BookBean> bookBeanList = new ArrayList<BookBean>();
-			List<StockBean> list = new ArrayList<StockBean>();
-			while (rs1.next()) {
-				String bookTableIsbn = rs1.getString("isbn");
-				String bookName = rs1.getString("name");
-				int bookClassId = rs1.getInt("class_id");
-				String bookAuthor = rs1.getString("author");
-				String bookPublisher = rs1.getString("publisher");
-				java.sql.Date bookReleaseDate = rs1.getDate("release_date");
-				// このbbeanをstockのbookbeanに入れてやる？
-				BookBean bbean = new BookBean(bookTableIsbn, bookName, bookClassId,
+		ResultSet rsBook = null;
+		List<BookBean> bookBeans = new ArrayList<BookBean>();
+
+		String sqlSelectFromStock = "select * from stock where  book_isbn = ? ";
+		ResultSet rsStock = null;
+		List<StockBean> stockBeans = new ArrayList<StockBean>();
+
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sqlSelectFromBook);
+				PreparedStatement st2 = con.prepareStatement(sqlSelectFromStock)) {
+			for (int i = 0; i < valueList.size(); i++) {
+				st.setString(i + 1, valueList.get(i));
+			}
+			for (int i = valueList.size(); i < valueList.size() + valueIntList.size(); i++) {
+				st.setInt(i + 1, valueIntList.get(i - valueList.size()));
+			}
+			rsBook = st.executeQuery();
+
+			while (rsBook.next()) {
+				String bookIsbn = rsBook.getString("isbn");
+				String bookName = rsBook.getString("name");
+				int bookClassId = rsBook.getInt("class_id");
+				String bookAuthor = rsBook.getString("author");
+				String bookPublisher = rsBook.getString("publisher");
+				java.sql.Date bookReleaseDate = rsBook.getDate("release_date");
+				BookBean bookBean = new BookBean(bookIsbn, bookName, bookClassId,
 						bookAuthor, bookPublisher, bookReleaseDate);
-				//				bookBeanList.add(bbean);
-				// ここから：取得したISBN番号でStockテーブルにSQL文実行
-				st2.setString(1, isbn);
-				rs2 = st2.executeQuery();
-				while (rs2.next()) {
-					int id = rs2.getInt("id");
-					String bookIsbn = rs2.getString("book_isbn");
-					java.sql.Date inDate = rs2.getDate("in_date");
-					java.sql.Date outDate = rs2.getDate("out_date");
-					String status = rs2.getString("status");
-					StockBean sbean = new StockBean(id, bookIsbn, inDate,
-							outDate, status, bbean);
-					list.add(sbean);
+				bookBeans.add(bookBean);
+			}
+			for (BookBean bean : bookBeans) {
+				st2.setString(1, bean.getIsbn());
+				rsStock = st2.executeQuery();
+				while (rsStock.next()) {
+					int stockId = rsStock.getInt("id");
+					String bookIsbn = rsStock.getString("book_isbn");
+					java.sql.Date inDate = rsStock.getDate("in_date");
+					java.sql.Date outDate = rsStock.getDate("out_date");
+					String status = rsStock.getString("status");
+					StockBean sbean = new StockBean(stockId, bookIsbn, inDate,
+							outDate, status, bean);
+					stockBeans.add(sbean);
+
 				}
 			}
-			return list;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOException("レコードの操作に失敗しました", e);
 		} finally {
 			try {
-				if (st1 != null)
-					st1.close();
-				if (st2 != null)
-					st2.close();
-				if (rs1 != null)
-					rs1.close();
-				if (rs2 != null)
-					rs2.close();
+				if (rsBook != null)
+					rsBook.close();
 
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new DAOException("リソースの開放に失敗しました", e);
 			}
 		}
-
+		return stockBeans;
 	}
 }
-
-//	public Short searchBook() {
-//		// TODO 自動生成されたメソッド・スタブ
-//		return null;
-//	}
