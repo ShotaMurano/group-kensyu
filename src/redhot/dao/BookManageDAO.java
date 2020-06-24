@@ -10,6 +10,10 @@ import redhot.bean.BookBean;
 import redhot.bean.StockBean;
 
 public class BookManageDAO extends MainDAO{
+  private Connection con;
+  public BookManageDAO() throws DAOException {
+		getConnection();
+	}
 
 //	public List searchBook(int isbn, String name , int classId, String author,
 //			String publisher, java.sql.Date releaseDate) throws DAOException {
@@ -88,7 +92,3 @@ public class BookManageDAO extends MainDAO{
 //		// TODO 自動生成されたメソッド・スタブ
 //		return null;
 //	}
-
-
-
-}

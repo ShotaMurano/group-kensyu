@@ -1,5 +1,6 @@
 package redhot.dao;
 
+
 class BookManageDAOTest extends BookManageDAO {
 
 //	@Test
