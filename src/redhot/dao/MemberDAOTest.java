@@ -32,23 +32,21 @@ class MemberDAOTest {
 	//					+ b[i].getAddress() + ":");
 	//		}
 	//	}
-	@Test
-	@DisplayName("search")
-	void test3() throws DAOException {
-		MemberDAO dao = new MemberDAO();
-		Assertions.assertEquals(1,
-				dao.searchMember("", "河村", "", "", "", "", "", "0").size());
-	}
+	//	@Test
+	//	@DisplayName("search")
+	//	void test3() throws DAOException {
+	//		MemberDAO dao = new MemberDAO();
+	//		Assertions.assertEquals(1,
+	//				dao.searchMember("", "河村", "", "", "", "", "", "0").size());
+	//	}
 
 	@Test
 	@DisplayName("search")
 	void test4() throws DAOException {
 		MemberDAO dao = new MemberDAO();
-		Date date = new Date();
 
 		Assertions.assertEquals(1,
-				dao.addMember("村野", "翔太", "神奈川県川崎市", "0802222999", Date.parse("1996-01-18"), "murano@gmail.com",
-						"himitu"));
+				dao.addMember("内野", "翔太", "神奈川県川崎市", "0802222999", Date.valueOf("1996-01-18"), "murano@gmail.com"));
 
 	}
 
