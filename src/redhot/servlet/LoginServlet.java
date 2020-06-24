@@ -35,9 +35,10 @@ public class LoginServlet extends HttpServlet {
 					HttpSession session = request.getSession();
 					session.setAttribute("isLogin", true);
 					session.setAttribute("id", id);
-					out.println("<html><head><title>Login</title></head><body>");
-					out.println("<h3>ログイン成功<h3>");
-					out.println("</body></html>");
+					//					out.println("<html><head><title>Login</title></head><body>");
+					//					out.println("<h3>ログイン成功<h3>");
+					//					out.println("</body></html>");
+					gotoPage(request, response, "/topPage.jsp");
 				} else {
 					out.println("<html><head><title>Login</title></head><body>");
 					out.println("<h3>ユーザ名またはパスワードが違います<h3>");

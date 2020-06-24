@@ -99,7 +99,7 @@ public class MemberDAO extends MainDAO {
 				String firstName = rs.getString("first_name");
 				String address = rs.getString("address");
 				String tellphone = rs.getString("tellphone");
-				Date birthday = rs.getDate("birthday");
+				String birthday = rs.getString("birthday");
 				String mailAddress = rs.getString("mail_address");
 				String password = rs.getString("password");
 				Date inDate = rs.getDate("in_date");
@@ -129,35 +129,35 @@ public class MemberDAO extends MainDAO {
 			String input_birthday,
 			String input_mailAddress, boolean isOut) throws DAOException {
 		if (con == null)
-			getConnection();
+			con = getConnection();
 		String sql = "SELECT * FROM users WHERE 1=1 ";
 		List<String> parameters = new ArrayList<>();
 		if (!Integer.toString(input_id).equals("")) {
-			sql += "AND id LIKE ? ";
+			sql += " AND id = ? ";
 			parameters.add("id");
 		}
 		if (!input_lastName.equals("")) {
-			sql += "AND last_name LIKE ?";
+			sql += " AND last_name LIKE ?";
 			parameters.add("last_name");
 		}
 		if (!input_firstName.equals("")) {
-			sql += "AND first_name LIKE ?";
+			sql += " AND first_name LIKE ?";
 			parameters.add("first_name");
 		}
 		if (!input_address.equals("")) {
-			sql += "AND address LIKE ?";
+			sql += " AND address LIKE ?";
 			parameters.add("address");
 		}
 		if (!input_tellphone.equals("")) {
-			sql += "AND tellphone LIKE ?";
+			sql += " AND tellphone LIKE ?";
 			parameters.add("tellphone");
 		}
-		if (input_birthday.equals("")) {
-			sql += "AND birthday LIKE ?";
+		if (!input_birthday.equals("")) {
+			sql += " AND birthday LIKE ?";
 			parameters.add("birthday");
 		}
 		if (isOut == true) {
-			sql += "AND out_date IS NOT NULL";
+			sql += " AND out_date IS NOT NULL";
 		}
 
 		int count = 0;
@@ -194,7 +194,7 @@ public class MemberDAO extends MainDAO {
 				String firstName = rs.getString("first_name");
 				String address = rs.getString("address");
 				String tellphone = rs.getString("tellphone");
-				Date birthday = rs.getDate("birthday");
+				String birthday = rs.getString("birthday");
 				String mailAddress = rs.getString("mail_address");
 				String password = rs.getString("password");
 				Date inDate = rs.getDate("in_date");

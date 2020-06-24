@@ -24,9 +24,7 @@ class MemberDAOTest {
 	void test2() throws DAOException {
 		MemberDAO dao = new MemberDAO();
 
-		//		Assertions.assertEquals(null, dao.searchBook("9788281642674"));
-
-		List<MemberBean> list = dao.searchMember(1, "村野", "翔太", "神奈川県川崎市", "0802222999", "1996-01-18",
+		List<MemberBean> list = dao.searchMember(1, "村野", "翔太", "神奈川県川崎市", "0802222999", "",
 				"smurano@gmail.com", false);
 		MemberBean[] b = new MemberBean[list.size()];
 		for (int i = 0; i < list.size(); i++) {
