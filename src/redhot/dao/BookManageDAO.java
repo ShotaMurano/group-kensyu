@@ -154,12 +154,6 @@ public class BookManageDAO extends MainDAO {
 		String later10_day_format = dateFormat.format(later10_day);
 		String today_format = dateFormat.format(today); //yyyy-MM-ddの形にフォーマットしている
 
-		//errorの時に1年1月1日を出すよう
-		//		LocalDate l_error_day = LocalDate.of(1, 1, 1);
-		//		Date error_day = Date.from(l_error_day.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-		//本のID・ISBN・資料名・分類コード・著者・出版社・返却日を保存する
-		//		id,stockId,userId,borrowDate,willReturnDate
 		List<BorrowBean> borrowBeans = new ArrayList<BorrowBean>();
 		ResultSet rs = null;
 		int max = 0;
@@ -211,9 +205,6 @@ public class BookManageDAO extends MainDAO {
 					BorrowBean borrowBean = new BorrowBean(id, stockid, userid, borrowDate, willReturnDate, returnDate);
 					borrowBeans.add(borrowBean);
 				} else {
-					//					java.sql.Date borrowDate = (java.sql.Date) error_day;
-					//					java.sql.Date willReturnDate = (java.sql.Date) error_day;
-					//					java.sql.Date returnDate = (java.sql.Date) error_day;
 					BorrowBean borrowBean = new BorrowBean(0, Integer.parseInt(book_id.get(i)), member_id);
 					borrowBeans.add(borrowBean);
 				}
