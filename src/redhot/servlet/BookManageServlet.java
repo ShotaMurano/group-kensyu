@@ -54,10 +54,21 @@ public class BookManageServlet extends HttpServlet {
 
 				// 追加のとき
 			} else if (action.equals("add")) {
-
+				String book_id = request.getParameter("book_id");
+				System.out.println(book_id);
 				// 	削除のとき
-			} else if (action.equals("delete")) {
+			} else if (action.equals("delete_check")) {
+				String book_id = request.getParameter("book_id");
+				String book_name = request.getParameter("book_name");
+				request.setAttribute("book_id", book_id);
+				request.setAttribute("book_name", book_name);
+				gotoPage(request, response, "/book/delete_check.jsp");
 
+			} else if (action.equals("delete")) {
+				String book_id = request.getParameter("book_id");
+				String message = dao.deleteBook(Integer.parseInt(book_id));
+				request.setAttribute("message", message);
+				gotoPage(request, response, "/book/delete_confirm.jsp");
 				// 変更のとき
 			} else if (action.equals("update")) {
 

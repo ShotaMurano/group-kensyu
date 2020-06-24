@@ -3,7 +3,10 @@ package redhot.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import redhot.bean.BookBean;
@@ -91,8 +94,23 @@ public class BookManageDAO extends MainDAO {
 		}
 
 	}
-}
 
+	public String deleteBook(int id) throws DAOException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //年月日にフォーマットする用
+		Date today = new Date();
+		String today_format = dateFormat.format(today); //yyyy-MM-ddの形にフォーマットしている
+		String sql = "UPDATE stock SET out_date='" + today_format + "',status='none' WHERE id=?";
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setInt(1, id);
+			st.executeUpdate();
+			return "本を1冊廃棄しました";
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		}
+	}
+}
+//UPDATE stock SET out_date='2020-06-24',status='none' WHERE id=1;
 //	public Short searchBook() {
 //		// TODO 自動生成されたメソッド・スタブ
 //		return null;
