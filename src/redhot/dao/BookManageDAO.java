@@ -18,7 +18,7 @@ public class BookManageDAO extends MainDAO {
 
 	//	public List searchBook(int isbn, String name , int classId, String author,
 	//			String publisher, java.sql.Date releaseDate) throws DAOException {
-	public List<StockBean> searchBook(int isbn) throws DAOException {
+	public List<StockBean> searchBook(String isbn) throws DAOException {
 		Connection con = super.getConnection();
 
 		PreparedStatement st1 = null;
@@ -35,7 +35,7 @@ public class BookManageDAO extends MainDAO {
 			st2 = con.prepareStatement(sql2);
 
 			//BookテーブルのSQL文に値の設定
-			st1.setInt(1, isbn);
+			st1.setString(1, isbn);
 			// SQL実行
 			rs1 = st1.executeQuery();
 
@@ -44,7 +44,7 @@ public class BookManageDAO extends MainDAO {
 			//			List<BookBean> bookBeanList = new ArrayList<BookBean>();
 			List<StockBean> list = new ArrayList<StockBean>();
 			while (rs1.next()) {
-				int bookTableIsbn = rs1.getInt("isbn");
+				String bookTableIsbn = rs1.getString("isbn");
 				String bookName = rs1.getString("name");
 				int bookClassId = rs1.getInt("class_id");
 				String bookAuthor = rs1.getString("author");
@@ -55,7 +55,7 @@ public class BookManageDAO extends MainDAO {
 						bookAuthor, bookPublisher, bookReleaseDate);
 				//				bookBeanList.add(bbean);
 				// ここから：取得したISBN番号でStockテーブルにSQL文実行
-				st2.setInt(1, isbn);
+				st2.setString(1, isbn);
 				rs2 = st2.executeQuery();
 				while (rs2.next()) {
 					int id = rs2.getInt("id");
