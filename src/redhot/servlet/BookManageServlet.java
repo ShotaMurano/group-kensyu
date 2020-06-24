@@ -50,7 +50,7 @@ public class BookManageServlet extends HttpServlet {
 				List<StockBean> list = dao.searchBook(isbn);
 				// リストをリクエストスコープに入れてjspへフォワードする
 				request.setAttribute("items", list);
-				gotoPage(request, response, "/searchResults.jsp");
+				gotoPage(request, response, "/book/searchResults.jsp");
 
 				// 追加のとき
 			} else if (action.equals("add")) {
