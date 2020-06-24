@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import redhot.bean.BorrowBean;
 import redhot.bean.StockBean;
 import redhot.dao.BookManageDAO;
 import redhot.dao.DAOException;
@@ -51,19 +52,18 @@ public class BookManageServlet extends HttpServlet {
 				// リストをリクエストスコープに入れてjspへフォワードする
 				request.setAttribute("items", list);
 				gotoPage(request, response, "/book/searchResults.jsp");
-
 				// 追加のとき
 			} else if (action.equals("add")) {
 				String book_id = request.getParameter("book_id");
 				System.out.println(book_id);
-				// 	削除のとき
+				// 削除、仮確定のとき
 			} else if (action.equals("delete_check")) {
 				String book_id = request.getParameter("book_id");
 				String book_name = request.getParameter("book_name");
 				request.setAttribute("book_id", book_id);
 				request.setAttribute("book_name", book_name);
 				gotoPage(request, response, "/book/delete_check.jsp");
-
+				//削除、確定のとき
 			} else if (action.equals("delete")) {
 				String book_id = request.getParameter("book_id");
 				String message = dao.deleteBook(Integer.parseInt(book_id));
@@ -71,7 +71,6 @@ public class BookManageServlet extends HttpServlet {
 				gotoPage(request, response, "/book/delete_confirm.jsp");
 				// 変更のとき
 			} else if (action.equals("update")) {
-
 				// 予約のとき
 			} else if (action.equals("preorder")) {
 				PreorderDAO preorderDao = new PreorderDAO();
@@ -85,6 +84,18 @@ public class BookManageServlet extends HttpServlet {
 					request.setAttribute("message", "資料の貸し出し、予約の合計は5冊までです。");
 					gotoPage(request, response, "/errInternal.jsp");
 				}
+				//貸出のとき
+			} else if (action.equals("search")) {
+				String[] book_id = new String[5];
+				for (int i = 0; i < book_id.length; i++) {
+					book_id[i] = request.getParameter("book_id_" + (i + 1) + "");
+				}
+				int member_id = Integer.parseInt(request.getParameter("member_id"));
+				List<BorrowBean> list = dao.borrowBook(member_id, book_id);
+				request.setAttribute("items", list);
+				gotoPage(request, response, "/book/searchResults.jsp");
+
+				// 追加のとき
 			}
 		} catch (DAOException e) {
 			e.printStackTrace();
