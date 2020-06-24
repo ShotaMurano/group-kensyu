@@ -1,4 +1,5 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
   <head>
@@ -7,28 +8,30 @@
   </head>
   <body>
     <h1>会員検索</h1>
-    <a href="" align="right">トップへ戻る</a>
+    <a href="/topPage.jsp" align="right">トップへ戻る</a>
     <a href="" align="right">ログアウト</a><br>
 
     <hr>
 
-    <form action="index.html" method="post">
+    <form action="/group-kensyu/MemberServlet" method="post">
       <p>
-      ID　　　　：<input type="text" name="" value=""><br>
-      苗字：<input type="text" name="" value="">
-      名前：<input type="text" name="" value=""><br>
-      住所：<input type="text" name="" value=""><br>
-      電話番号：<input type="text" name="" value=""><br>
-      メールアドレス：<input type="text" name="" value=""><br>
+      ID　　　　：<input type="text" name="id" value=""><br>
+      苗字：<input type="text" name="lastName" value="">
+      名前：<input type="text" name="firstName" value=""><br>
+      住所：<input type="text" name="address" value=""><br>
+      電話番号：<input type="text" name="tellphone" value=""><br>
+      生年月日：<input type="text" name="birthday" value=""><br>
+      メールアドレス：<input type="text" name="mail_Address" value=""><br>
       </p>
       会員のステータス：
       <input type="checkbox" name="inout" value="1">会員
       <input type="checkbox" name="inout" value="2">退会済み会員
 
       <br><br>
-      <input type="submit" name="" value="検索"><br>
+      <input type="submit" value="検索"><br>
+      <input type="hidden" name="action" value="search">
     </form>
-
+<!--
     <hr>
 
       <table border="1">
@@ -59,7 +62,7 @@
         <td><input type='button' value="会員の退会"></td>
       </tr>
       </table>
-
+-->
 
   </body>
 </html>
