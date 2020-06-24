@@ -97,6 +97,7 @@ public class BookManageDAO extends MainDAO {
 					StockBean sbean = new StockBean(stockId, bookIsbn, inDate,
 							outDate, status, bean);
 					stockBeans.add(sbean);
+
 				}
 			}
 

@@ -1,8 +1,11 @@
 package redhot.dao;
 
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import redhot.bean.StockBean;
 
 public class BookManageDAOTest {
 
@@ -12,6 +15,9 @@ public class BookManageDAOTest {
 		BookManageDAO dao = new BookManageDAO();
 		Assertions.assertEquals("9788281642675",
 				dao.searchBook("9788281642675", "", "9", "", "新潮文庫", "").get(0).getBookIsbn());
+
 	}
+
+
 
 }
