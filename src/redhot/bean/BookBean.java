@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class BookBean implements Serializable{
-	private int isbn;
+	private String isbn;
 	private String name;
 	private int classId;
 	private String author;
@@ -15,7 +15,7 @@ public class BookBean implements Serializable{
 	public BookBean() {
 	}
 
-	public BookBean(int isbn, String name, int classId, String author, String publisher, Date releaseDate) {
+	public BookBean(String isbn, String name, int classId, String author, String publisher, Date releaseDate) {
 		this.isbn = isbn;
 		this.name = name;
 		this.classId = classId;
@@ -24,11 +24,11 @@ public class BookBean implements Serializable{
 		this.releaseDate = releaseDate;
 	}
 
-	public int getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(int isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
