@@ -154,13 +154,20 @@ public class BookManageDAO extends MainDAO {
 		String later10_day_format = dateFormat.format(later10_day);
 		String today_format = dateFormat.format(today); //yyyy-MM-ddの形にフォーマットしている
 
+		//errorの時に1年1月1日を出すよう
+		//		LocalDate l_error_day = LocalDate.of(1, 1, 1);
+		//		Date error_day = Date.from(l_error_day.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
 		//本のID・ISBN・資料名・分類コード・著者・出版社・返却日を保存する
 		//		id,stockId,userId,borrowDate,willReturnDate
 		List<BorrowBean> borrowBeans = new ArrayList<BorrowBean>();
 		ResultSet rs = null;
 		int max = 0;
+		String status = null;
 
 		for (int i = 0; i < book_id.size(); i++) {
+			String sqlStockStatus = "SELECT status FROM stock WHERE id = ?";
+			String sqlStockStatusUpdate = "UPDATE stock SET status='borrow' WHERE id = ?";
 			String sql = "INSERT INTO borrow(stock_id,user_id,borrow_date,will_return_date) VALUES("
 					+ book_id.get(i) + ",?,'"
 					+ today_format + "','"
@@ -168,28 +175,49 @@ public class BookManageDAO extends MainDAO {
 			String sqlMaxId = "SELECT MAX(id) as max FROM borrow";
 			String sqlSelect = "SELECT * FROM borrow WHERE id = ?";
 			try (Connection con = getConnection();
-					PreparedStatement st = con.prepareStatement(sql);
+					PreparedStatement st = con.prepareStatement(sqlStockStatus);
+					PreparedStatement st0 = con.prepareStatement(sqlStockStatusUpdate);
+					PreparedStatement st1 = con.prepareStatement(sql);
 					PreparedStatement st2 = con.prepareStatement(sqlMaxId);
 					PreparedStatement st3 = con.prepareStatement(sqlSelect);) {
-				st.setInt(1, member_id);
-				st.executeUpdate();
 
-				rs = st2.executeQuery();
+				st.setInt(1, Integer.parseInt(book_id.get(i)));
+				rs = st.executeQuery();
 				rs.next();
-				max = rs.getInt("max");
+				status = rs.getString("status");
 				rs.close();
 
-				st3.setInt(1, max);
-				rs = st3.executeQuery();
-				rs.next();
-				int id = rs.getInt("id");
-				int stockid = rs.getInt("stock_id");
-				int userid = rs.getInt("user_id");
-				java.sql.Date borrowDate = rs.getDate("borrow_date");
-				java.sql.Date willReturnDate = rs.getDate("will_return_date");
-				java.sql.Date returnDate = rs.getDate("return_date");
-				BorrowBean borrowBean = new BorrowBean(id, stockid, userid, borrowDate, willReturnDate, returnDate);
-				borrowBeans.add(borrowBean);
+				if ("exist".equals(status)) {
+					st0.setInt(1, Integer.parseInt(book_id.get(i)));
+					st0.executeUpdate();
+
+					st1.setInt(1, member_id);
+					st1.executeUpdate();
+
+					rs = st2.executeQuery();
+					rs.next();
+					max = rs.getInt("max");
+					rs.close();
+
+					st3.setInt(1, max);
+					rs = st3.executeQuery();
+					rs.next();
+					int id = rs.getInt("id");
+					int stockid = rs.getInt("stock_id");
+					int userid = rs.getInt("user_id");
+					java.sql.Date borrowDate = rs.getDate("borrow_date");
+					java.sql.Date willReturnDate = rs.getDate("will_return_date");
+					java.sql.Date returnDate = rs.getDate("return_date");
+					BorrowBean borrowBean = new BorrowBean(id, stockid, userid, borrowDate, willReturnDate, returnDate);
+					borrowBeans.add(borrowBean);
+				} else {
+					//					java.sql.Date borrowDate = (java.sql.Date) error_day;
+					//					java.sql.Date willReturnDate = (java.sql.Date) error_day;
+					//					java.sql.Date returnDate = (java.sql.Date) error_day;
+					BorrowBean borrowBean = new BorrowBean(0, Integer.parseInt(book_id.get(i)), member_id);
+					borrowBeans.add(borrowBean);
+				}
+
 			} catch (SQLException e) {
 				throw new DAOException("レコードの変更・レコードの取得に失敗しました", e);
 			} finally {

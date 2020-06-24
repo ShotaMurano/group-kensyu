@@ -30,9 +30,8 @@
 				<td>${borrow.willReturnDate}</td>
 			</tr>
 		</c:forEach>
-		<!--       <tr><td>1</td><td>97788481642674</td><td>吾輩は猫である</td><td>文学</td><td>夏目漱石</td><td>服部書店</td><td>1905年10月6日</td><th><input type='button' value="削除"></th><th><input type='button' value="変更"></th><th><input type='button' value="予約"></th></tr> -->
-		<!--       <tr><td>2</td><td>97788481642674</td><td>吾輩は猫である</td><td>文学</td><td>夏目漱石</td><td>服部書店</td><td>1905年10月6日</td><th><input type='button' value="削除"></th><th><input type='button' value="変更"></th><th><input type='button' value="予約"></th></tr> -->
 	</table>
+	<p>*貸出IDが「0」の資料は既に貸し出されています。<br>入力した資料IDに間違いがないか確認してください。</p>
 
 </body>
 </html>
