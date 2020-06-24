@@ -54,19 +54,30 @@ public class MemberServlet extends HttpServlet {
 				String firstName = request.getParameter("firstName");
 				String address = request.getParameter("address");
 				String tellphone = request.getParameter("tellphone");
-				Date birthday = Date.valueOf(request.getParameter("birthday"));
+				String birthday = request.getParameter("birthday");
 				String mailAddress = request.getParameter("mailAddress");
-				//boolean isOut =
+				boolean isOut = false;
+				if (request.getParameter("inout").equals("1")) {
+					isOut = false;
+				} else {
+					isOut = true;
+				}
 
 				List<MemberBean> list = dao.searchMember(id, lastName, firstName, address, tellphone, birthday,
-						mailAddress, false);
+						mailAddress, isOut);
 				request.setAttribute("members", list);
 				gotoPage(request, response, "member/searh.jsp");
 			} else if (action.contentEquals("update")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String lastName = request.getParameter("lastName");
+				String firstName = request.getParameter("firstName");
+				String address = request.getParameter("address");
+				String tellphone = request.getParameter("tellphone");
+				Date birthday = Date.valueOf(request.getParameter("birthday"));
+				String mailAddress = request.getParameter("mail_Address");
+				Date outDate = Date.valueOf(request.getParameter("outDate"));
 
-				dao.updateMember(id, lastName);
+				dao.updateMember(id, lastName, firstName, address, tellphone, birthday, mailAddress, outDate);
 				List<MemberBean> list = dao.findAll();
 				request.setAttribute("members", list);
 				gotoPage(request, response, "/showEmployee2.jsp");

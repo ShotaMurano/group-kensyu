@@ -20,16 +20,17 @@ public class MemberDAO extends MainDAO {
 
 	public boolean checkLogin(int id, String password) throws DAOException {
 		if (con == null) {
-			getConnection();
+			con = getConnection();
 		}
 		String sql = "SELECT password FROM users WHERE id=?";
 
 		String database_password = "";
 
 		try (PreparedStatement st = con.prepareStatement(sql);) {
+			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
-				st.setInt(1, id);
+
 				database_password = rs.getString("password");
 			}
 		} catch (SQLException e) {
@@ -98,7 +99,7 @@ public class MemberDAO extends MainDAO {
 				String firstName = rs.getString("first_name");
 				String address = rs.getString("address");
 				String tellphone = rs.getString("tellphone");
-				String birthday = rs.getString("birthday");
+				Date birthday = rs.getDate("birthday");
 				String mailAddress = rs.getString("mail_address");
 				String password = rs.getString("password");
 				Date inDate = rs.getDate("in_date");
@@ -125,15 +126,66 @@ public class MemberDAO extends MainDAO {
 
 	public List<MemberBean> searchMember(int input_id, String input_lastName, String input_firstName,
 			String input_address, String input_tellphone,
-			Date input_birthday,
+			String input_birthday,
 			String input_mailAddress, boolean isOut) throws DAOException {
 		if (con == null)
 			getConnection();
-		String sql = "SELECT * FROM users WHERE ? LIKE ?";
+		String sql = "SELECT * FROM users WHERE 1=1 ";
+		List<String> parameters = new ArrayList<>();
+		if (!Integer.toString(input_id).equals("")) {
+			sql += "AND id LIKE ? ";
+			parameters.add("id");
+		}
+		if (!input_lastName.equals("")) {
+			sql += "AND last_name LIKE ?";
+			parameters.add("last_name");
+		}
+		if (!input_firstName.equals("")) {
+			sql += "AND first_name LIKE ?";
+			parameters.add("first_name");
+		}
+		if (!input_address.equals("")) {
+			sql += "AND address LIKE ?";
+			parameters.add("address");
+		}
+		if (!input_tellphone.equals("")) {
+			sql += "AND tellphone LIKE ?";
+			parameters.add("tellphone");
+		}
+		if (input_birthday.equals("")) {
+			sql += "AND birthday LIKE ?";
+			parameters.add("birthday");
+		}
+		if (isOut == true) {
+			sql += "AND out_date IS NOT NULL";
+		}
+
+		int count = 0;
+
 		ResultSet rs = null;
 		try (PreparedStatement st = con.prepareStatement(sql)) {
-			st.setString(1, "id");
-			st.setInt(2, input_id);
+
+			if (parameters.contains("id")) {
+				st.setInt(++count, input_id);
+			}
+
+			if (parameters.contains("last_name")) {
+				st.setString(++count, input_lastName);
+			}
+
+			if (parameters.contains("first_name")) {
+				st.setString(++count, input_firstName);
+			}
+			if (parameters.contains("address")) {
+				st.setString(++count, input_address);
+			}
+			if (parameters.contains("tellphone")) {
+				st.setString(++count, input_tellphone);
+			}
+			if (parameters.contains("birthday")) {
+				st.setString(++count, input_birthday);
+			}
+
 			rs = st.executeQuery();
 			List<MemberBean> list = new ArrayList<MemberBean>();
 			while (rs.next()) {
@@ -142,7 +194,7 @@ public class MemberDAO extends MainDAO {
 				String firstName = rs.getString("first_name");
 				String address = rs.getString("address");
 				String tellphone = rs.getString("tellphone");
-				String birthday = rs.getString("birthday");
+				Date birthday = rs.getDate("birthday");
 				String mailAddress = rs.getString("mail_address");
 				String password = rs.getString("password");
 				Date inDate = rs.getDate("in_date");
@@ -170,15 +222,23 @@ public class MemberDAO extends MainDAO {
 
 	}
 
-	public int updateMember(int input_id, String input_lastName) throws DAOException {
+	public int updateMember(int input_id, String input_lastName, String input_firstName, String input_address,
+			String input_tellphone, Date input_birthday, String input_mailAddress, Date input_outDate)
+			throws DAOException {
 		if (con == null)
 			getConnection();
 
-		String sql = "UPDATE users SET last_name=? WHERE id=?";
+		String sql = "UPDATE users SET last_name=?,first_name=?,address=?,tellphone=?,birthday=?,mail_address=?,out_date=? WHERE id=?";
 
 		try (PreparedStatement st = con.prepareStatement(sql)) {
-			st.setString(1, "%" + input_lastName + "%");
-			st.setInt(2, input_id);
+			st.setString(1, input_lastName);
+			st.setString(2, input_firstName);
+			st.setString(3, input_address);
+			st.setString(4, input_tellphone);
+			st.setDate(5, input_birthday);
+			st.setString(6, input_mailAddress);
+			st.setDate(7, input_outDate);
+			st.setInt(8, input_id);
 
 			int rows = st.executeUpdate();
 			return rows;
