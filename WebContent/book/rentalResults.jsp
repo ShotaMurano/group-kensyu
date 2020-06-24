@@ -6,11 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>貸出入力</title>
+<title>貸出処理完了</title>
 </head>
 <body>
 <jsp:include page="rental.jsp" />
 	<hr>
+	<h2>貸出処理が完了しました</h2>
 	<table border="1">
 		<tr>
 			<th>貸出ID</th>

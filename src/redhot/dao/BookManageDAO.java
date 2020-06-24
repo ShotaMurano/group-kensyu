@@ -204,4 +204,6 @@ public class BookManageDAO extends MainDAO {
 		}
 		return borrowBeans;
 	}
+
+	//本を返却する
 }
