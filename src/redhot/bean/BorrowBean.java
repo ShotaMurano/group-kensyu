@@ -3,12 +3,13 @@ package redhot.bean;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class BorrowBean implements Serializable{
+public class BorrowBean implements Serializable {
 	private int id;
 	private int stockId;
 	private int userId;
 	private java.sql.Date borrowDate;
 	private java.sql.Date willReturnDate;
+
 	public java.sql.Date getWillReturnDate() {
 		return willReturnDate;
 	}
@@ -71,7 +72,5 @@ public class BorrowBean implements Serializable{
 	public void setReturnDate(java.sql.Date returnDate) {
 		this.returnDate = returnDate;
 	}
-
-
 
 }

@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import redhot.bean.BookBean;
+import redhot.bean.BorrowBean;
 import redhot.bean.StockBean;
 
 public class BookManageDAO extends MainDAO {
@@ -120,6 +123,7 @@ public class BookManageDAO extends MainDAO {
 		return stockBeans;
 	}
 
+	//本を削除する（廃棄年月日・statusの変更）
 	public String deleteBook(int id) throws DAOException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //年月日にフォーマットする用
 		Date today = new Date();
@@ -133,5 +137,62 @@ public class BookManageDAO extends MainDAO {
 		} catch (SQLException e) {
 			throw new DAOException("レコードの取得に失敗しました", e);
 		}
+	}
+
+	//本を貸出する（BorrowDBの会員ID・資料ID・StockDBのstatusを変更）
+	public List<BorrowBean> borrowBook(int member_id, String[] book_id) throws DAOException {
+
+		//今日の日付と10日後の日付取得
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //年月日にフォーマットする用
+
+		LocalDateTime l_today = LocalDateTime.now();
+		LocalDateTime l_later10_day = l_today.plusDays(10);
+
+		Date today = Date.from(l_today.toInstant(ZoneId.systemDefault().getRules().getOffset(l_today)));
+		Date later10_day = Date
+				.from(l_later10_day.toInstant(ZoneId.systemDefault().getRules().getOffset(l_later10_day)));
+		String later10_day_format = dateFormat.format(later10_day);
+		String today_format = dateFormat.format(today); //yyyy-MM-ddの形にフォーマットしている
+
+		//本のID・ISBN・資料名・分類コード・著者・出版社・返却日を保存する
+		//		id,stockId,userId,borrowDate,willReturnDate
+		List<BorrowBean> borrowBeans = new ArrayList<BorrowBean>();
+		ResultSet rs = null;
+
+		for (int i = 0; i < book_id.length; i++) {
+			String sql = "INSERT INTO * borrow(stock_id,user_id,borrow_date,will_return_date) VALUES("
+					+ book_id[i] + ",?"
+					+ today_format + ","
+					+ later10_day_format + ")";
+			String sqlSelect = "SELECT * FROM borrow WHERE stock_id = ? ";
+
+			try (Connection con = getConnection();
+					PreparedStatement st = con.prepareStatement(sql);
+					PreparedStatement st2 = con.prepareStatement(sqlSelect);) {
+				st.setInt(1, member_id);
+				st.executeUpdate();
+				rs = st2.executeQuery();
+				rs.next();
+				int id = rs.getInt("id");
+				int stockid = rs.getInt("stockid");
+				int userid = rs.getInt("userid");
+				java.sql.Date borrowDate = rs.getDate("borrowDate");
+				java.sql.Date willReturnDate = rs.getDate("willReturnDate");
+				java.sql.Date returnDate = rs.getDate("returnDate");
+				BorrowBean borrowBean = new BorrowBean(id, stockid, userid, borrowDate, willReturnDate, returnDate);
+				borrowBeans.add(borrowBean);
+			} catch (SQLException e) {
+				throw new DAOException("レコードの取得に失敗しました", e);
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new DAOException("リソースの開放に失敗しました", e);
+				}
+			}
+		}
+		return borrowBeans;
 	}
 }
