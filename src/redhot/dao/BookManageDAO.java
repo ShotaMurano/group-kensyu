@@ -58,7 +58,7 @@ public class BookManageDAO extends MainDAO {
 			valueIntList.add(Integer.valueOf(classId));
 		}
 
-		if (whereList != null || whereList.size() != 0) {
+		if (whereList.size() != 0) {
 			sqlSelectFromBook += " WHERE " + String.join(" AND ", whereList);
 		}
 

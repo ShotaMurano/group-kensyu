@@ -27,10 +27,11 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">資料管理</a>
         <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">貸出</a>
+          <a class="dropdown-item" href="#">返却</a>
           <a class="dropdown-item" href="#">追加</a>
           <a class="dropdown-item" href="#">検索</a>
         </div>
-      </li>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">予約管理</a>
