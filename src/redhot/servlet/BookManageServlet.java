@@ -117,16 +117,25 @@ public class BookManageServlet extends HttpServlet {
 				//貸出のとき
 			} else if (action.equals("rental")) {
 				List<String> book_id = new ArrayList<String>();
+				int count = 0;
 				for (int i = 0; i < 5; i++) {
 					if ("".equals(request.getParameter("book_id_" + (i + 1) + ""))) {
 					} else {
 						book_id.add(request.getParameter("book_id_" + (i + 1) + ""));
+						count++;
 					}
 				}
 				int member_id = Integer.parseInt(request.getParameter("member_id"));
-				List<BorrowBean> list = dao.borrowBook(member_id, book_id);
-				request.setAttribute("items", list);
-				gotoPage(request, response, "/book/rentalResults.jsp");
+				count += dao.getBorrowNum(member_id);
+				count += dao.getPreorderNum(member_id);
+				if (count <= 5) {
+					List<BorrowBean> list = dao.borrowBook(member_id, book_id);
+					request.setAttribute("items", list);
+					gotoPage(request, response, "/book/rentalResults.jsp");
+				} else {
+					request.setAttribute("count", count);
+					gotoPage(request, response, "/book/error_rental.jsp");
+				}
 
 				// 追加のとき
 			}
