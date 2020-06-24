@@ -40,16 +40,25 @@
 				<td>"${book.outDate}"</td>
 				<td>"${book.status}"</td>
 				<th>
-				<input type="submit" value="削除">
+				<form action="/group-kensyu/BookManageServlet" method="post">
+				<input type="hidden" name="book_id" value="${book.id}">
 				<input type="hidden" name="action" value="delete">
+				<input type="submit" value="削除">
+				</form>
 				</th>
 				<th>
-				<input type="submit" value="変更">
+				<form action="/group-kensyu/BookManageServlet" method="post">
+				<input type="hidden" name="book_id" value="${book.id}">
 				<input type="hidden" name="action" value="update">
+				<input type="submit" value="変更">
+				</form>
 				</th>
 				<th>
-				<input type="submit" value="予約">
+				<form action="/group-kensyu/BookManageServlet" method="post">
+				<input type="hidden" name="book_id" value="${book.id}">
 				<input type="hidden" name="action" value="preorder">
+				<input type="submit" value="予約">
+				</form>
 				</th>
 			</tr>
 		</c:forEach>
