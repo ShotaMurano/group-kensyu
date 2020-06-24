@@ -69,17 +69,47 @@ public class BookManageServlet extends HttpServlet {
 				String message = dao.deleteBook(Integer.parseInt(book_id));
 				request.setAttribute("message", message);
 				gotoPage(request, response, "/book/delete_confirm.jsp");
+
 				// 変更のとき
 			} else if (action.equals("update")) {
 
-				// 予約のとき
-			} else if (action.equals("preorder")) {
-				PreorderDAO preorderDao = new PreorderDAO();
-				int stockId = Integer.parseInt(request.getParameter("stockId"));
-				int userId = (int) session.getAttribute("id");
 
+				// 予約のとき
+				//まず予約したい会員番号の入力を受ける
+			} else if (action.equals("preorderForm")) {
+				String book_id = request.getParameter("book_id");
+				String book_name = request.getParameter("book_name");
+				request.setAttribute("book_id", book_id);
+				request.setAttribute("book_name", book_name);
+				gotoPage(request, response, "/preorder/preorderForm.jsp");
+
+				//次に予約の確認画面
+			} else if (action.equals("preorderCheck")) {
+				String book_id = request.getParameter("book_id");
+				String book_name = request.getParameter("book_name");
+				String id = request.getParameter("id");
+				request.setAttribute("book_id", book_id);
+				request.setAttribute("book_name", book_name);
+				request.setAttribute("id", id);
+				gotoPage(request, response, "/preorder/preorderCheck.jsp");
+
+				//予約関数を呼んで完了画面の表示
+			} else if (action.equals("preorder")) {
+				String book_id = request.getParameter("book_id");
+				String book_name = request.getParameter("book_name");
+				String id = request.getParameter("id");
+
+				PreorderDAO preorderDao = new PreorderDAO();
+//				int stockId = Integer.parseInt(request.getParameter("stockId"));
+//				int userId = (int) session.getAttribute("id");
+				int stockId = Integer.parseInt(book_id);
+				int userId = Integer.parseInt(id);
 				int newPreorderNum = preorderDao.addPreorderQueue(stockId, userId);
+
 				if (newPreorderNum == 1) {
+					request.setAttribute("book_id", book_id);
+					request.setAttribute("book_name", book_name);
+					request.setAttribute("id", id);
 					gotoPage(request, response, "/preorder/finishedPreorder.jsp");
 				} else {
 					request.setAttribute("message", "資料の貸し出し、予約の合計は5冊までです。");
