@@ -40,7 +40,7 @@ public class BookManageServlet extends HttpServlet {
 			// 検索のとき
 			if (action.equals("search")) {
 				//			int id = Integer.parseInt(request.getParameter("id"));
-				int isbn = Integer.parseInt(request.getParameter("isbn"));
+				String isbn = request.getParameter("isbn");
 				//			String name = request.getParameter("name");
 				//			int classId = Integer.parseInt(request.getParameter("classId"));
 				//			String author = request.getParameter("author");
