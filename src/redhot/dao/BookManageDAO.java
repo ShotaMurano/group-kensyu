@@ -9,14 +9,15 @@ import java.util.List;
 import redhot.bean.BookBean;
 import redhot.bean.StockBean;
 
-public class BookManageDAO extends MainDAO{
-  private Connection con;
-  public BookManageDAO() throws DAOException {
+public class BookManageDAO extends MainDAO {
+	private Connection con;
+
+	public BookManageDAO() throws DAOException {
 		getConnection();
 	}
 
-//	public List searchBook(int isbn, String name , int classId, String author,
-//			String publisher, java.sql.Date releaseDate) throws DAOException {
+	//	public List searchBook(int isbn, String name , int classId, String author,
+	//			String publisher, java.sql.Date releaseDate) throws DAOException {
 	public List<StockBean> searchBook(int isbn) throws DAOException {
 		Connection con = super.getConnection();
 
@@ -38,10 +39,9 @@ public class BookManageDAO extends MainDAO{
 			// SQL実行
 			rs1 = st1.executeQuery();
 
-
 			// Bookテーブルの検索結果から対象レコードのISBN番号を取得、
 			// 取得したISBN番号でStockテーブルにSQL文実行
-//			List<BookBean> bookBeanList = new ArrayList<BookBean>();
+			//			List<BookBean> bookBeanList = new ArrayList<BookBean>();
 			List<StockBean> list = new ArrayList<StockBean>();
 			while (rs1.next()) {
 				int bookTableIsbn = rs1.getInt("isbn");
@@ -53,7 +53,7 @@ public class BookManageDAO extends MainDAO{
 				// このbbeanをstockのbookbeanに入れてやる？
 				BookBean bbean = new BookBean(bookTableIsbn, bookName, bookClassId,
 						bookAuthor, bookPublisher, bookReleaseDate);
-//				bookBeanList.add(bbean);
+				//				bookBeanList.add(bbean);
 				// ここから：取得したISBN番号でStockテーブルにSQL文実行
 				st2.setInt(1, isbn);
 				rs2 = st2.executeQuery();
@@ -70,23 +70,28 @@ public class BookManageDAO extends MainDAO{
 			}
 			return list;
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOException("レコードの操作に失敗しました", e);
 		} finally {
 			try {
-				if (st1 != null) st1.close();
-				if (st2 != null) st2.close();
-				if (rs1 != null) rs1.close();
-				if (rs2 != null) rs2.close();
+				if (st1 != null)
+					st1.close();
+				if (st2 != null)
+					st2.close();
+				if (rs1 != null)
+					rs1.close();
+				if (rs2 != null)
+					rs2.close();
 
-			}catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 				throw new DAOException("リソースの開放に失敗しました", e);
 			}
 		}
 
 	}
+}
 
 //	public Short searchBook() {
 //		// TODO 自動生成されたメソッド・スタブ
