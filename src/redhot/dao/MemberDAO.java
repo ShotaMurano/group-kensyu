@@ -93,7 +93,7 @@ public class MemberDAO extends MainDAO {
 				String firstName = rs.getString("first_name");
 				String address = rs.getString("address");
 				String tellphone = rs.getString("tellphone");
-				Date birthday = rs.getDate("birthday");
+				String birthday = rs.getString("birthday");
 				String mailAddress = rs.getString("mail_address");
 				String password = rs.getString("password");
 				Date inDate = rs.getDate("in_date");
@@ -190,7 +190,7 @@ public class MemberDAO extends MainDAO {
 				String firstName = rs.getString("first_name");
 				String address = rs.getString("address");
 				String tellphone = rs.getString("tellphone");
-				Date birthday = rs.getDate("birthday");
+				String birthday = rs.getString("birthday");
 				String mailAddress = rs.getString("mail_address");
 				String password = rs.getString("password");
 				Date inDate = rs.getDate("in_date");

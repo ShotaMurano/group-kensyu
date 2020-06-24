@@ -9,14 +9,14 @@ public class MemberBean implements Serializable {
 	private String firstName;
 	private String address;
 	private String tellphone;
-	private Date birthday;
+	private String birthday;
 	private String mailAddress;
 	private String password;
 	private Date inDate;
 	private Date outDate;
 	private String cerUrl;
 
-	public MemberBean(int id, String lastName, String firstName, String address, String tellphone, Date birthday,
+	public MemberBean(int id, String lastName, String firstName, String address, String tellphone, String birthday,
 			String mailAddress, String password, Date inDate, Date outDate, String cerUrl) {
 		this.id = id;
 		this.lastName = lastName;
@@ -71,11 +71,11 @@ public class MemberBean implements Serializable {
 		this.tellphone = tellphone;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 
