@@ -58,7 +58,7 @@ public class MemberDAO extends MainDAO {
 		if (con == null)
 			getConnection();
 
-		String sql = "INSERT INTO users(last_name,first_name,address,tellphone,birthday,mail_address) VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO users(last_name,first_name,address,tellphone,birthday,mail_address,password) VALUES(?,?,?,?,?,?,?)";
 		try (Connection con = getConnection(); PreparedStatement st = con.prepareStatement(sql)) {
 
 			st.setString(1, input_lastName);
@@ -67,6 +67,8 @@ public class MemberDAO extends MainDAO {
 			st.setString(4, input_tellphone);
 			st.setDate(5, input_birthday);
 			st.setString(6, input_mailAddress);
+
+			st.setString(7, "himitu");
 
 			int rows = st.executeUpdate();
 			return rows;
