@@ -49,19 +49,16 @@ public class MemberServlet extends HttpServlet {
 				//				request.setAttribute("employees", list);
 				//				gotoPage(request, response, "/showEmployee2.jsp");
 			} else if (action.contentEquals("search")) {
-				int id = Integer.parseInt(request.getParameter("id"));
+				String id = request.getParameter("id");
 				String lastName = request.getParameter("lastName");
 				String firstName = request.getParameter("firstName");
 				String address = request.getParameter("address");
 				String tellphone = request.getParameter("tellphone");
 				String birthday = request.getParameter("birthday");
 				String mailAddress = request.getParameter("mailAddress");
-				boolean isOut = false;
-				if (request.getParameter("inout").equals("1")) {
-					isOut = false;
-				} else {
-					isOut = true;
-				}
+
+				//"1"なら現会員、"2なら退会済"
+				String isOut = request.getParameter("inout");
 
 				List<MemberBean> list = dao.searchMember(id, lastName, firstName, address, tellphone, birthday,
 						mailAddress, isOut);

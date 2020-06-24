@@ -7,7 +7,7 @@
   <body>
     <h1>ログインページ</h1>
     <hr>
-    <form action="/group-kensyu/redhot.servlet/LoginServlet" method="post">
+    <form action="/group-kensyu/LoginServlet" method="post">
       ID　　　　：<input type="number" name="id"><br>
       パスワード：<input type="password" name="password"><br>
       <input type="hidden" name="action" value="login">
