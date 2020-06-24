@@ -140,7 +140,7 @@ public class BookManageDAO extends MainDAO {
 	}
 
 	//本を貸出する（BorrowDBの会員ID・資料ID・StockDBのstatusを変更）
-	public List<BorrowBean> borrowBook(int member_id, String[] book_id) throws DAOException {
+	public List<BorrowBean> borrowBook(int member_id, List<String> book_id) throws DAOException {
 
 		//今日の日付と10日後の日付取得
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //年月日にフォーマットする用
@@ -158,31 +158,40 @@ public class BookManageDAO extends MainDAO {
 		//		id,stockId,userId,borrowDate,willReturnDate
 		List<BorrowBean> borrowBeans = new ArrayList<BorrowBean>();
 		ResultSet rs = null;
+		int max = 0;
 
-		for (int i = 0; i < book_id.length; i++) {
-			String sql = "INSERT INTO * borrow(stock_id,user_id,borrow_date,will_return_date) VALUES("
-					+ book_id[i] + ",?"
-					+ today_format + ","
-					+ later10_day_format + ")";
-			String sqlSelect = "SELECT * FROM borrow WHERE stock_id = ? ";
-
+		for (int i = 0; i < book_id.size(); i++) {
+			String sql = "INSERT INTO borrow(stock_id,user_id,borrow_date,will_return_date) VALUES("
+					+ book_id.get(i) + ",?,'"
+					+ today_format + "','"
+					+ later10_day_format + "')";
+			String sqlMaxId = "SELECT MAX(id) as max FROM borrow";
+			String sqlSelect = "SELECT * FROM borrow WHERE id = ?";
 			try (Connection con = getConnection();
 					PreparedStatement st = con.prepareStatement(sql);
-					PreparedStatement st2 = con.prepareStatement(sqlSelect);) {
+					PreparedStatement st2 = con.prepareStatement(sqlMaxId);
+					PreparedStatement st3 = con.prepareStatement(sqlSelect);) {
 				st.setInt(1, member_id);
 				st.executeUpdate();
+
 				rs = st2.executeQuery();
 				rs.next();
+				max = rs.getInt("max");
+				rs.close();
+
+				st3.setInt(1, max);
+				rs = st3.executeQuery();
+				rs.next();
 				int id = rs.getInt("id");
-				int stockid = rs.getInt("stockid");
-				int userid = rs.getInt("userid");
-				java.sql.Date borrowDate = rs.getDate("borrowDate");
-				java.sql.Date willReturnDate = rs.getDate("willReturnDate");
-				java.sql.Date returnDate = rs.getDate("returnDate");
+				int stockid = rs.getInt("stock_id");
+				int userid = rs.getInt("user_id");
+				java.sql.Date borrowDate = rs.getDate("borrow_date");
+				java.sql.Date willReturnDate = rs.getDate("will_return_date");
+				java.sql.Date returnDate = rs.getDate("return_date");
 				BorrowBean borrowBean = new BorrowBean(id, stockid, userid, borrowDate, willReturnDate, returnDate);
 				borrowBeans.add(borrowBean);
 			} catch (SQLException e) {
-				throw new DAOException("レコードの取得に失敗しました", e);
+				throw new DAOException("レコードの変更・レコードの取得に失敗しました", e);
 			} finally {
 				try {
 					if (rs != null)

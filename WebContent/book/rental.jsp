@@ -12,9 +12,9 @@
     <a href="" align="right">ログアウト</a><br>
 
     <hr>
-    <form action="/BookManageServlet" method="post">
+    <form action="/group-kensyu/BookManageServlet" method="post">
       <p>
-      会員ID：<input type="text" name="member_id" value=""><br>
+      会員ID：<input type="text" name="member_id" value=""><br><br>
       本のID：<input type="text" name="book_id_1" value=""><br>
       本のID：<input type="text" name="book_id_2" value=""><br>
       本のID：<input type="text" name="book_id_3" value=""><br>
@@ -22,9 +22,8 @@
       本のID：<input type="text" name="book_id_5" value=""><br>
       </p>
       <br>
+      <input type="hidden" name="action" value="rental">
       <input type="submit" name="" value="借りる"><br>
     </form><br>
-    <!-- <table border="1">
-  </table> -->
 </body>
 </html>
