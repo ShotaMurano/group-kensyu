@@ -57,7 +57,8 @@
 				<td>
 				<form action="/group-kensyu/BookManageServlet" method="post">
 				<input type="hidden" name="book_id" value="${book.id}">
-				<input type="hidden" name="action" value="preorder">
+				<input type="hidden" name="book_name" value="${book.bean.name}">
+				<input type="hidden" name="action" value="preorderForm">
 				<input type="submit" value="予約">
 				</form>
 				</td>
