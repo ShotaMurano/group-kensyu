@@ -1,12 +1,94 @@
 package redhot.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BookManageDAO extends MainDAO {
-	private Connection con;
+import redhot.bean.BookBean;
+import redhot.bean.StockBean;
 
-	public BookManageDAO() throws DAOException {
+public class BookManageDAO extends MainDAO{
+  private Connection con;
+  public BookManageDAO() throws DAOException {
 		getConnection();
 	}
 
-}
+//	public List searchBook(int isbn, String name , int classId, String author,
+//			String publisher, java.sql.Date releaseDate) throws DAOException {
+	public List<StockBean> searchBook(int isbn) throws DAOException {
+		Connection con = super.getConnection();
+
+		PreparedStatement st1 = null;
+		PreparedStatement st2 = null;
+		ResultSet rs1 = null;
+		ResultSet rs2 = null;
+
+		try {
+			// Bookテーブルに実行するSQL文
+			String sql1 = "select * from book where isbn = ? ";
+			// Stockテーブルに実行するSQL文
+			String sql2 = "select * from stock where  book_isbn = ? ";
+			st1 = con.prepareStatement(sql1);
+			st2 = con.prepareStatement(sql2);
+
+			//BookテーブルのSQL文に値の設定
+			st1.setInt(1, isbn);
+			// SQL実行
+			rs1 = st1.executeQuery();
+
+
+			// Bookテーブルの検索結果から対象レコードのISBN番号を取得、
+			// 取得したISBN番号でStockテーブルにSQL文実行
+//			List<BookBean> bookBeanList = new ArrayList<BookBean>();
+			List<StockBean> list = new ArrayList<StockBean>();
+			while (rs1.next()) {
+				int bookTableIsbn = rs1.getInt("isbn");
+				String bookName = rs1.getString("name");
+				int bookClassId = rs1.getInt("class_id");
+				String bookAuthor = rs1.getString("author");
+				String bookPublisher = rs1.getString("publisher");
+				java.sql.Date bookReleaseDate = rs2.getDate("release_date");
+				// このbbeanをstockのbookbeanに入れてやる？
+				BookBean bbean = new BookBean(bookTableIsbn, bookName, bookClassId,
+						bookAuthor, bookPublisher, bookReleaseDate);
+//				bookBeanList.add(bbean);
+				// ここから：取得したISBN番号でStockテーブルにSQL文実行
+				st2.setInt(1, isbn);
+				rs2 = st2.executeQuery();
+				while (rs2.next()) {
+					int id = rs2.getInt("id");
+					int bookIsbn = rs2.getInt("book_isbn");
+					java.sql.Date inDate = rs2.getDate("in_date");
+					java.sql.Date outDate = rs2.getDate("out_date");
+					String status = rs2.getString("status");
+					StockBean sbean = new StockBean(id, bookIsbn, inDate,
+							outDate, status, bbean);
+					list.add(sbean);
+				}
+			}
+			return list;
+
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました", e);
+		} finally {
+			try {
+				if (st1 != null) st1.close();
+				if (st2 != null) st2.close();
+				if (rs1 != null) rs1.close();
+				if (rs2 != null) rs2.close();
+
+			}catch(Exception e){
+				e.printStackTrace();
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+
+	}
+
+//	public Short searchBook() {
+//		// TODO 自動生成されたメソッド・スタブ
+//		return null;
+//	}

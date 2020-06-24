@@ -25,7 +25,9 @@
       出版日　　　　　 ：<input type="text" name="releaseDate" value=""><br>
 
       <br><br>
-      <input type="submit" name="search" value="検索"><br>
+      <input type="submit" value="検索">
+       <input type="hidden" name="action" value="search">
+      <br>
     </form>
 
 
