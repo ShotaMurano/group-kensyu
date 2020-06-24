@@ -49,7 +49,7 @@ public class BookManageDAO extends MainDAO {
 				int bookClassId = rs1.getInt("class_id");
 				String bookAuthor = rs1.getString("author");
 				String bookPublisher = rs1.getString("publisher");
-				java.sql.Date bookReleaseDate = rs2.getDate("release_date");
+				java.sql.Date bookReleaseDate = rs1.getDate("release_date");
 				// このbbeanをstockのbookbeanに入れてやる？
 				BookBean bbean = new BookBean(bookTableIsbn, bookName, bookClassId,
 						bookAuthor, bookPublisher, bookReleaseDate);
@@ -59,7 +59,7 @@ public class BookManageDAO extends MainDAO {
 				rs2 = st2.executeQuery();
 				while (rs2.next()) {
 					int id = rs2.getInt("id");
-					int bookIsbn = rs2.getInt("book_isbn");
+					String bookIsbn = rs2.getString("book_isbn");
 					java.sql.Date inDate = rs2.getDate("in_date");
 					java.sql.Date outDate = rs2.getDate("out_date");
 					String status = rs2.getString("status");

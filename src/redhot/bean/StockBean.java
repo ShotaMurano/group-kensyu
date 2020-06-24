@@ -3,9 +3,9 @@ package redhot.bean;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class StockBean implements Serializable{
+public class StockBean implements Serializable {
 	private int id;
-	private int bookIsbn;
+	private String bookIsbn;
 	private java.sql.Date inDate;
 	private java.sql.Date outDate;
 	private String status;
@@ -14,7 +14,7 @@ public class StockBean implements Serializable{
 	public StockBean() {
 	}
 
-	public StockBean(int id, int bookIsbn, Date inDate, Date outDate, String status, BookBean bean) {
+	public StockBean(int id, String bookIsbn, Date inDate, Date outDate, String status, BookBean bean) {
 		super();
 		this.id = id;
 		this.bookIsbn = bookIsbn;
@@ -32,11 +32,11 @@ public class StockBean implements Serializable{
 		this.id = id;
 	}
 
-	public int getBookIsbn() {
+	public String getBookIsbn() {
 		return bookIsbn;
 	}
 
-	public void setBookIsbn(int bookIsbn) {
+	public void setBookIsbn(String bookIsbn) {
 		this.bookIsbn = bookIsbn;
 	}
 
@@ -71,10 +71,5 @@ public class StockBean implements Serializable{
 	public void setBean(BookBean bean) {
 		this.bean = bean;
 	}
-
-
-
-
-
 
 }
