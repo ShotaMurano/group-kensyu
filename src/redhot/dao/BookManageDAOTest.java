@@ -219,11 +219,32 @@ public class BookManageDAOTest {
 		BookManageDAO dao = new BookManageDAO();
 		BookBean bookbean = dao.getBookInfo("9788281642674");
 		Assertions.assertEquals("9788281642674", bookbean.getIsbn());
-		Assertions.assertEquals("吾輩は猫である", bookbean.getName());
+		Assertions.assertEquals("吾輩は犬である", bookbean.getName());
 		Assertions.assertEquals(9, bookbean.getClassId());
 		Assertions.assertEquals("夏目漱石", bookbean.getAuthor());
 		Assertions.assertEquals("新潮文庫", bookbean.getPublisher());
 		//		Assertions.assertEquals("1995-01-22", bookbean.getReleaseDate());
+	}
+
+	@Test
+	@DisplayName("返却された本のIDを取得できるかの確認")
+	public void test13() throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		Assertions.assertEquals(4, dao.searchReturnedBook().get(0).getId());
+	}
+
+	@Test
+	@DisplayName("予約があるかのチェック")
+	public void test14() throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		Assertions.assertEquals("予約あり", dao.searchPreorderStatus(5));
+	}
+
+	@Test
+	@DisplayName("予約がないかのチェック")
+	public void test15() throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		Assertions.assertEquals("予約なし", dao.searchPreorderStatus(4));
 	}
 
 }

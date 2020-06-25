@@ -131,10 +131,36 @@ public class BookManageServlet extends HttpServlet {
 				request.setAttribute("book_id", book_id);
 				request.setAttribute("book_name", book_name);
 				gotoPage(request, response, "/preorder/preorderForm.jsp");
-
-				//次に予約の確認画面
+				//返却された本の検索
 			} else if (action.equals("searchReturnedBook")) {
-				gotoPage(request, response, "/book/searchResults.jsp");
+				List<StockBean> list = dao.searchReturnedBook();
+				for (StockBean sb : list) {
+					sb.setPreorderStatus(dao.searchPreorderStatus(sb.getId()));
+				}
+				request.setAttribute("returned_books", list);
+				gotoPage(request, response, "/book/search_returned_book_results.jsp");
+
+				//本を館内に移動
+			} else if (action.equals("exist")) {
+				String book_id = request.getParameter("book_id");
+				dao.modifyExitBook(Integer.parseInt(book_id));
+				List<StockBean> list = dao.searchReturnedBook();
+				for (StockBean sb : list) {
+					sb.setPreorderStatus(dao.searchPreorderStatus(sb.getId()));
+				}
+				request.setAttribute("returned_books", list);
+				gotoPage(request, response, "/book/search_returned_book_results.jsp");
+				//本を予約棚に移動
+			} else if (action.equals("keep")) {
+				String book_id = request.getParameter("book_id");
+				dao.modifyKeepBook(Integer.parseInt(book_id));
+				List<StockBean> list = dao.searchReturnedBook();
+				for (StockBean sb : list) {
+					sb.setPreorderStatus(dao.searchPreorderStatus(sb.getId()));
+				}
+				request.setAttribute("returned_books", list);
+				gotoPage(request, response, "/book/search_returned_book_results.jsp");
+				//次に予約の確認画面
 			} else if (action.equals("preorderCheck")) {
 				String book_id = request.getParameter("book_id");
 				String book_name = request.getParameter("book_name");

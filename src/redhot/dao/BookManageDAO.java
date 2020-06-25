@@ -25,7 +25,7 @@ public class BookManageDAO extends MainDAO {
 		List<StockBean> stockBeans = new ArrayList<StockBean>();
 		// Bookテーブルに実行するSQL文
 		String sqlSelectReturnedBook = "SELECT * FROM stock WHERE status='returned'";
-		String sqlSelectBookInfo = "SELECT * FROM book WHERE isbn='?'";
+		String sqlSelectBookInfo = "SELECT * FROM book WHERE isbn=?";
 		ResultSet rs = null;
 		ResultSet rs2 = null;
 		try (Connection con = getConnection();
@@ -39,9 +39,18 @@ public class BookManageDAO extends MainDAO {
 				String status = rs.getString("status");
 				st2.setString(1, bookid);
 				rs2 = st2.executeQuery();
-				StockBean stockBean = new StockBean(stockid, bookid, in_date, in_date, status, null);
+				rs2.next();
+				String bookIsbn = rs2.getString("isbn");
+				String bookName = rs2.getString("name");
+				int bookClassId = rs2.getInt("class_id");
+				String bookAuthor = rs2.getString("author");
+				String bookPublisher = rs2.getString("publisher");
+				java.sql.Date bookReleaseDate = rs2.getDate("release_date");
+				BookBean bookBean = new BookBean(bookIsbn, bookName, bookClassId,
+						bookAuthor, bookPublisher, bookReleaseDate);
+				StockBean stockBean = new StockBean(stockid, bookid, null, in_date, status, bookBean);
 				stockBeans.add(stockBean);
-				rs.close();
+				rs2.close();
 			}
 		} catch (SQLException e) {
 			throw new DAOException("レコードの取得に失敗しました", e);
@@ -55,6 +64,67 @@ public class BookManageDAO extends MainDAO {
 			}
 		}
 		return stockBeans;
+	}
+
+	public String searchPreorderStatus(int stockid) throws DAOException {
+		String status = null;
+		// Bookテーブルに実行するSQL文
+		String sql = "SELECT COUNT(*) as count FROM preorder WHERE stock_id=?";
+		ResultSet rs = null;
+		int count = 0;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setInt(1, stockid);
+			rs = st.executeQuery();
+			rs.next();
+			count = rs.getInt("count");
+			if (count > 0) {
+				status = "予約あり";
+				return status;
+			} else {
+				status = "予約なし";
+				return status;
+			}
+
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+	}
+
+	//本を館内に移動する
+	public void modifyExitBook(int stockid) throws DAOException {
+		String sql = "UPDATE stock SET status='exist' WHERE id=?";
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setInt(1, stockid);
+			st.executeUpdate();
+			return;
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		}
+
+	}
+
+	//本を予約棚に移動する
+	public void modifyKeepBook(int stockid) throws DAOException {
+		String sql = "UPDATE stock SET status='keep' WHERE id=?";
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setInt(1, stockid);
+			st.executeUpdate();
+			return;
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		}
+
 	}
 
 	//本を削除する（廃棄年月日・statusの変更）
