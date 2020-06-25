@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import redhot.bean.BookBean;
 import redhot.bean.BorrowBean;
 import redhot.bean.StockBean;
 import redhot.dao.BookManageDAO;
@@ -54,8 +55,14 @@ public class BookManageServlet extends HttpServlet {
 				request.setAttribute("items", list);
 				gotoPage(request, response, "/book/searchResults.jsp");
 				// 追加のとき
+			} else if (action.contentEquals("isbn_search")) {
+				String isbn = request.getParameter("isbn");
+				BookBean book = dao.searchIsbn(isbn);
+				request.setAttribute("bookBean", book);
+				gotoPage(request, response, "/book/add.jsp");
 			} else if (action.equals("add")) {
 				String book_id = request.getParameter("book_id");
+
 				System.out.println(book_id);
 				// 削除、仮確定のとき
 			} else if (action.equals("delete_check")) {
@@ -70,7 +77,6 @@ public class BookManageServlet extends HttpServlet {
 				String message = dao.deleteBook(Integer.parseInt(book_id));
 				request.setAttribute("message", message);
 				gotoPage(request, response, "/book/delete_confirm.jsp");
-
 				// 変更のとき
 			} else if (action.equals("update")) {
 				// 予約のとき
