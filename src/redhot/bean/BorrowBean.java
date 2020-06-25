@@ -33,6 +33,12 @@ public class BorrowBean implements Serializable {
 		this.returnDate = returnDate;
 	}
 
+	public BorrowBean(int id, int stockId, int userId) {
+		this.id = id;
+		this.stockId = stockId;
+		this.userId = userId;
+	}
+
 	public int getId() {
 		return id;
 	}

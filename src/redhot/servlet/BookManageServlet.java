@@ -1,6 +1,7 @@
 package redhot.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -98,8 +99,8 @@ public class BookManageServlet extends HttpServlet {
 				String id = request.getParameter("id");
 
 				PreorderDAO preorderDao = new PreorderDAO();
-//				int stockId = Integer.parseInt(request.getParameter("stockId"));
-//				int userId = (int) session.getAttribute("id");
+				//				int stockId = Integer.parseInt(request.getParameter("stockId"));
+				//				int userId = (int) session.getAttribute("id");
 				int stockId = Integer.parseInt(book_id);
 				int userId = Integer.parseInt(id);
 				int newPreorderNum = preorderDao.addPreorderQueue(stockId, userId);
@@ -114,15 +115,49 @@ public class BookManageServlet extends HttpServlet {
 					gotoPage(request, response, "/errInternal.jsp");
 				}
 				//貸出のとき
-			} else if (action.equals("search")) {
-				String[] book_id = new String[5];
-				for (int i = 0; i < book_id.length; i++) {
-					book_id[i] = request.getParameter("book_id_" + (i + 1) + "");
+			} else if (action.equals("rental")) {
+				List<String> book_id = new ArrayList<String>();
+				int count = 0;
+				for (int i = 0; i < 5; i++) {
+					if ("".equals(request.getParameter("book_id_" + (i + 1) + ""))) {
+					} else {
+						book_id.add(request.getParameter("book_id_" + (i + 1) + ""));
+						count++;
+					}
 				}
 				int member_id = Integer.parseInt(request.getParameter("member_id"));
-				List<BorrowBean> list = dao.borrowBook(member_id, book_id);
-				request.setAttribute("items", list);
-				gotoPage(request, response, "/book/searchResults.jsp");
+				count += dao.getBorrowNum(member_id);
+				count += dao.getPreorderNum(member_id);
+				if (count <= 5) {
+					List<BorrowBean> list = dao.borrowBook(member_id, book_id);
+					request.setAttribute("items", list);
+					gotoPage(request, response, "/book/rentalResults.jsp");
+				} else {
+					request.setAttribute("count", count);
+					gotoPage(request, response, "/book/error_rental.jsp");
+				}
+
+				// 返却のとき
+			} else if (action.equals("return")) {
+				List<String> book_id = new ArrayList<String>();
+				String status = null; //getBookStatusの返り値を格納する
+				for (int i = 0; i < 5; i++) {
+					if ("".equals(request.getParameter("book_id_" + (i + 1) + ""))) {
+					} else {
+						status = dao.getBookStatus(Integer.parseInt(request.getParameter("book_id_" + (i + 1) + "")));
+						if ("borrow".equals(status)) {
+							book_id.add(request.getParameter("book_id_" + (i + 1) + ""));
+						}
+					}
+				}
+				int member_id = Integer.parseInt(request.getParameter("member_id"));
+				if (book_id.size() != 0) {
+					List<BorrowBean> list = dao.returnBook(member_id, book_id);
+					request.setAttribute("items", list);
+					gotoPage(request, response, "/book/returnResults.jsp");
+				} else {
+					gotoPage(request, response, "/book/error_return.jsp");
+				}
 
 				// 追加のとき
 			}

@@ -10,17 +10,18 @@
     <a href="" align="right">ログアウト</a><br>
 
     <hr>
-    <form action="index.html" method="post">
+    <form action="/group-kensyu/BookManageServlet" method="post">
       <p>
-      ID：<input type="text" name="" value="1"><br>
-      ID：<input type="text" name="" value="112"><br>
-      ID：<input type="text" name="" value=""><br>
-      ID：<input type="text" name="" value=""><br>
-      ID：<input type="text" name="" value=""><br>
+      会員ID：<input type="text" name="member_id" value=""><br><br>
+      本のID：<input type="text" name="book_id_1" value=""><br>
+      本のID：<input type="text" name="book_id_2" value=""><br>
+      本のID：<input type="text" name="book_id_3" value=""><br>
+      本のID：<input type="text" name="book_id_4" value=""><br>
+      本のID：<input type="text" name="book_id_5" value=""><br>
       </p>
       <br>
+      <input type="hidden" name="action" value="return">
       <input type="submit" name="" value="返却する"><br>
     </form><br>
-    2冊の本を返却しました。
   </body>
 </html>
