@@ -39,7 +39,19 @@
           <a class="dropdown-item" href="#">予約状況の確認</a>
         </div>
       </li>
+            <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">マイメニュー</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">ログアウト</a>
+        </div>
+      </li>
     </ul>
+     <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">マイメニュー</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/group-kensyu/Logout.jsp">ログアウト</a>
+        </div>
+      </li>
   </div>
 </nav>
 

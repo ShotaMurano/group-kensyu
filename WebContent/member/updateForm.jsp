@@ -1,5 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, redhot.tool.MyDBAccess"%>
+<!DOCTYPE html>
 <%
 int id = Integer.parseInt(request.getParameter("id"));
 
@@ -42,7 +44,7 @@ if (id != 0){
     <a href="" align="right">ログアウト</a><br>
 
     <hr>
-    <form action="index.html" method="post">
+    <form action="/group-kensyu/MemberServlet" method="post">
       苗字　　　　　：<input type="text" name="lastName" value="<%= lastName %>">
       名前　　　　　：<input type="text" name="firstName" value="<%= firstName %>"><br>
       住所　　　　　：<input type="text" name="address" value="<%= address %>"><br>
@@ -51,6 +53,7 @@ if (id != 0){
       生年月日　　　：<input type="text" name="birthday" value="<%= birthday %>"><br>
       退会年月日　　：<input type="text" name="outDate" value="<%= outDate %>"><br>
      <!--  身分証明書　　：<input type="file" name="" value=""><br><br>-->
+     <input type="hidden" name="action" value="updateResult">
       <input type="submit" name="" value="確認画面へ"><br>
     </form>
   </body>

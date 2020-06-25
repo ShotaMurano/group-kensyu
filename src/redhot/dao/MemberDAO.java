@@ -56,7 +56,7 @@ public class MemberDAO extends MainDAO {
 			Date input_birthday,
 			String input_mailAddress) throws DAOException {
 		if (con == null)
-			getConnection();
+			con = getConnection();
 
 		String sql = "INSERT INTO users(last_name,first_name,address,tellphone,birthday,mail_address,password) VALUES(?,?,?,?,?,?,?)";
 		try (Connection con = getConnection(); PreparedStatement st = con.prepareStatement(sql)) {
@@ -81,7 +81,7 @@ public class MemberDAO extends MainDAO {
 
 	public List<MemberBean> findAll() throws DAOException {
 		if (con == null) {
-			getConnection();
+			con = getConnection();
 		}
 
 		List<MemberBean> list = new ArrayList<MemberBean>();
@@ -124,6 +124,7 @@ public class MemberDAO extends MainDAO {
 			String input_address, String input_tellphone,
 			String input_birthday,
 			String input_mailAddress, String isOut) throws DAOException {
+
 		// Bookテーブルに実行するSQL文
 		String sqlSelectFromUsers = "select * from users";
 		ArrayList<String> whereList = new ArrayList<String>();
@@ -160,9 +161,9 @@ public class MemberDAO extends MainDAO {
 			valueIntList.add(Integer.parseInt(id));
 		}
 
-		if ("1".contentEquals(isOut)) {
+		if ("2".equals(isOut)) {
 			whereList.add("out_date IS NOT NULL");
-		} else {
+		} else if ("1".equals(isOut)) {
 			whereList.add("out_date IS NULL");
 		}
 
@@ -177,11 +178,11 @@ public class MemberDAO extends MainDAO {
 
 			for (int i = 0; i < valueList.size(); i++) {
 				st.setString(i + 1, valueList.get(i));
-				System.out.println(valueList.get(i));
+				//				System.out.println(valueList.get(i));
 			}
 			for (int i = valueList.size(); i < valueList.size() + valueIntList.size(); i++) {
 				st.setInt(i + 1, valueIntList.get(i - valueList.size()));
-				System.out.println(valueList.get(i));
+				//				System.out.println(valueList.get(i));
 			}
 
 			rs = st.executeQuery();
@@ -224,7 +225,7 @@ public class MemberDAO extends MainDAO {
 			String input_tellphone, Date input_birthday, String input_mailAddress, Date input_outDate)
 			throws DAOException {
 		if (con == null)
-			getConnection();
+			con = getConnection();
 
 		String sql = "UPDATE users SET last_name=?,first_name=?,address=?,tellphone=?,birthday=?,mail_address=?,out_date=? WHERE id=?";
 

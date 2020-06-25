@@ -22,8 +22,10 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		try {
-			request.setCharacterEncoding("UTF-8");
+
 			PrintWriter out = response.getWriter();
 
 			String action = request.getParameter("action");
@@ -45,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 					out.println("</body></html>");
 
 				}
-			} else if (action.equals("logout")) {
+			} else if (action.contentEquals("logout")) {
 				HttpSession session = request.getSession(false);
 				if (session != null) {
 					session.invalidate();

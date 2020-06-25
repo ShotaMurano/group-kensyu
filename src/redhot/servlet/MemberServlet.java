@@ -55,7 +55,7 @@ public class MemberServlet extends HttpServlet {
 				String address = request.getParameter("address");
 				String tellphone = request.getParameter("tellphone");
 				String birthday = request.getParameter("birthday");
-				String mailAddress = request.getParameter("mailAddress");
+				String mailAddress = request.getParameter("mail_Address");
 
 				//"1"なら現会員、"2なら退会済"
 				String isOut = request.getParameter("inout");
@@ -63,8 +63,8 @@ public class MemberServlet extends HttpServlet {
 				List<MemberBean> list = dao.searchMember(id, lastName, firstName, address, tellphone, birthday,
 						mailAddress, isOut);
 				request.setAttribute("members", list);
-				gotoPage(request, response, "/member/searh.jsp");
-			} else if (action.contentEquals("update")) {
+				gotoPage(request, response, "/member/searchResults.jsp");
+			} else if (action.contentEquals("updateResult")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String lastName = request.getParameter("lastName");
 				String firstName = request.getParameter("firstName");
@@ -77,8 +77,10 @@ public class MemberServlet extends HttpServlet {
 				dao.updateMember(id, lastName, firstName, address, tellphone, birthday, mailAddress, outDate);
 				List<MemberBean> list = dao.findAll();
 				request.setAttribute("members", list);
-				gotoPage(request, response, "/member/searchResults.jsp");
+				gotoPage(request, response, "/member/updateResults.jsp");
 
+			} else if (action.contentEquals("update")) {
+				gotoPage(request, response, "/member/updateForm.jsp");
 			} else {
 				request.setAttribute("message", "正しく操作してください");
 				gotoPage(request, response, "/errInternal.jsp");

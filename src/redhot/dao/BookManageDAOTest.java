@@ -1,10 +1,8 @@
 package redhot.dao;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -57,15 +55,29 @@ public class BookManageDAOTest {
 	//		return;
 	//	}
 
+	//	@Test
+	//	@DisplayName("今日の日付+10日の取得")
+	//	public void test3() {
+	//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //年月日にフォーマットする用
+	//		LocalDateTime ldt = LocalDateTime.now();
+	//		LocalDateTime l_date = ldt.plusDays(10);
+	//		Date date3 = Date.from(l_date.toInstant(ZoneId.systemDefault().getRules().getOffset(l_date)));
+	//		String day_later10_format = dateFormat.format(date3);
+	//		Assertions.assertEquals("2020-07-05", day_later10_format);
+	//	}
+
 	@Test
 	@DisplayName("今日の日付+10日の取得")
-	public void test3() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //年月日にフォーマットする用
-		LocalDateTime ldt = LocalDateTime.now();
-		LocalDateTime l_date = ldt.plusDays(10);
-		Date date3 = Date.from(l_date.toInstant(ZoneId.systemDefault().getRules().getOffset(l_date)));
-		String day_later10_format = dateFormat.format(date3);
-		Assertions.assertEquals("2020-07-05", day_later10_format);
+	public void test10() {
+		try {
+			BookManageDAO dao = new BookManageDAO();
+			BookBean bean;
+			bean = dao.searchIsbn("9788281642674");
+			Assertions.assertEquals("9788281642674", bean.getIsbn());
+		} catch (DAOException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	//	@Test

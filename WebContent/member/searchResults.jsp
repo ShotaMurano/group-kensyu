@@ -20,38 +20,36 @@
 	        <th>電話番号</th>
 	        <th>メールアドレス</th>
 	        <th>生年月日</th>
+	        <th>入会年月日</th>
 	        <th>会員情報の更新</th>
 	        <th>会員の退会</th>
 		</tr>
 		<c:forEach items="${members}" var="member">
 			<tr>
-				<td>${member.bean.id}</td>
-				<td>${member.bean.lastName}</td>
-				<td>${member.bean.firstName}</td>
-				<td>${member.bean.address}</td>
-				<td>${member.bean.tellphone}</td>
-				<td>${member.bean.maiAddress}</td>
-				<td>${member.bean.birthday}</td>
+				<td>${member.id}</td>
+				<td>${member.lastName}</td>
+				<td>${member.firstName}</td>
+				<td>${member.address}</td>
+				<td>${member.tellphone}</td>
+				<td>${member.mailAddress}</td>
+				<td>${member.birthday}</td>
+				<td>${member.inDate}</td>
 				<td>
 				<form action="/group-kensyu/MemberServlet" method="post">
-				<input type="hidden" name="book_id" value="${book.id}">
-				<input type="hidden" name="book_name" value="${book.bean.name}">
-				<input type="hidden" name="action" value="delete_check">
-				<input type="submit" value="削除">
-				</form>
-				</td>
-				<td>
-				<form action="/group-kensyu/BookManageServlet" method="post">
-				<input type="hidden" name="book_id" value="${book.id}">
+				<input type="hidden" name="member.id" value="${member.id}">
+				<input type="hidden" name="member.lastName" value="${member.lastName}">
+				<input type="hidden" name="member.firstName" value="${member.firstName}">
 				<input type="hidden" name="action" value="update">
-				<input type="submit" value="変更">
+				<input type="submit" value="更新">
 				</form>
 				</td>
 				<td>
-				<form action="/group-kensyu/BookManageServlet" method="post">
-				<input type="hidden" name="book_id" value="${book.id}">
-				<input type="hidden" name="action" value="preorder">
-				<input type="submit" value="予約">
+				<form action="/group-kensyu/MemberServlet" method="post">
+				<input type="hidden" name="member.id" value="${member.id}">
+				<input type="hidden" name="member.lastName" value="${member.lastName}">
+				<input type="hidden" name="member.firstName" value="${member.firstName}">
+				<input type="hidden" name="action" value="update">
+				<input type="submit" value="退会">
 				</form>
 				</td>
 			</tr>

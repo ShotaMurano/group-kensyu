@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>会員検索</h1>
-    <a href="/topPage.jsp" align="right">トップへ戻る</a>
+    <a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
     <a href="" align="right">ログアウト</a><br>
 
     <hr>
