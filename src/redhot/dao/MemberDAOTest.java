@@ -67,6 +67,35 @@ class MemberDAOTest {
 		System.out.println(list);
 
 	}
+
+	@Test
+	@DisplayName("search 存在しない会員の検索")
+	void test91() throws DAOException {
+		MemberDAO dao = new MemberDAO();
+		List<MemberBean> list = dao.searchMember("2", "", "", "", "", "", "", "");
+		System.out.println("search 存在しない会員の検索");
+		System.out.println(list);
+		Assertions.assertEquals(0, list.size());
+	}
+
+	@Test
+	@DisplayName("search 存在する会員の退会日はnull")
+	void test5() throws DAOException {
+		MemberDAO dao = new MemberDAO();
+		List<MemberBean> list = dao.searchMember("1", "村野", "翔太", "神奈川県川崎市", "0802222999", "",
+				"smurano@gmail.com", "0");
+		System.out.println(list);
+		System.out.println(list.size());
+		MemberBean[] b = new MemberBean[list.size()];
+		b[0] = list.get(0);
+		System.out.println(b[0].getOutDate());
+		//		for (int i = 0; i < list.size(); i++) {
+		//			b[i] = list.get(i);
+		//			System.out.println(b[i].getOutDate());
+		//		}
+		//		Assertions.assertEquals(null, list.get(9));
+	}
+
 }
 //
 //}

@@ -21,100 +21,34 @@ public class BookManageDAO extends MainDAO {
 		getConnection();
 	}
 
-	//	public List searchBook(int isbn, String name , int classId, String author,
-	//			String publisher, java.sql.Date releaseDate) throws DAOException {
-	public List<StockBean> searchBook(String isbn, String name, String classId,
-			String author, String publisher,
-			String releaseDate) throws DAOException {
-
-		// Bookテーブルに実行するSQL文
-		String sqlSelectFromBook = "select * from book";
-		ArrayList<String> whereList = new ArrayList<String>();
-		ArrayList<String> valueList = new ArrayList<String>();
-		ArrayList<Integer> valueIntList = new ArrayList<Integer>();
-
-		if (!"".equals(isbn)) {
-			whereList.add("isbn = ?");
-			valueList.add(isbn);
-		}
-		if (!"".equals(name)) {
-			whereList.add("name = ?");
-			valueList.add(name);
-		}
-		if (!"".equals(author)) {
-			whereList.add("author = ?");
-			valueList.add(author);
-		}
-		if (!"".equals(publisher)) {
-			whereList.add("publisher = ?");
-			valueList.add(publisher);
-		}
-		if (!"".equals(releaseDate)) {
-			whereList.add("releaseDate = ?");
-			valueList.add(releaseDate);
-		}
-		if (!"".equals(classId)) {
-			whereList.add("class_id = ?");
-			valueIntList.add(Integer.valueOf(classId));
-		}
-
-		if (whereList.size() != 0) {
-			sqlSelectFromBook += " WHERE " + String.join(" AND ", whereList);
-		}
-
-		ResultSet rsBook = null;
-		List<BookBean> bookBeans = new ArrayList<BookBean>();
-
-		String sqlSelectFromStock = "select * from stock where  book_isbn = ? ";
-		ResultSet rsStock = null;
+	public List<StockBean> searchReturnedBook() throws DAOException {
 		List<StockBean> stockBeans = new ArrayList<StockBean>();
-
+		// Bookテーブルに実行するSQL文
+		String sqlSelectReturnedBook = "SELECT * FROM stock WHERE status='returned'";
+		String sqlSelectBookInfo = "SELECT * FROM book WHERE isbn='?'";
+		ResultSet rs = null;
+		ResultSet rs2 = null;
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement(sqlSelectFromBook);
-				PreparedStatement st2 = con.prepareStatement(sqlSelectFromStock)) {
-			for (int i = 0; i < valueList.size(); i++) {
-				st.setString(i + 1, valueList.get(i));
+				PreparedStatement st = con.prepareStatement(sqlSelectReturnedBook);
+				PreparedStatement st2 = con.prepareStatement(sqlSelectBookInfo);) {
+			rs = st.executeQuery();
+			while (rs.next()) {
+				int stockid = rs.getInt("id");
+				String bookid = rs.getString("book_isbn");
+				java.sql.Date in_date = rs.getDate("in_date");
+				String status = rs.getString("status");
+				st2.setString(1, bookid);
+				rs2 = st2.executeQuery();
+				StockBean stockBean = new StockBean(stockid, bookid, in_date, in_date, status, null);
+				stockBeans.add(stockBean);
+				rs.close();
 			}
-			for (int i = valueList.size(); i < valueList.size() + valueIntList.size(); i++) {
-				st.setInt(i + 1, valueIntList.get(i - valueList.size()));
-			}
-			rsBook = st.executeQuery();
-
-			while (rsBook.next()) {
-				String bookIsbn = rsBook.getString("isbn");
-				String bookName = rsBook.getString("name");
-				int bookClassId = rsBook.getInt("class_id");
-				String bookAuthor = rsBook.getString("author");
-				String bookPublisher = rsBook.getString("publisher");
-				java.sql.Date bookReleaseDate = rsBook.getDate("release_date");
-				BookBean bookBean = new BookBean(bookIsbn, bookName, bookClassId,
-						bookAuthor, bookPublisher, bookReleaseDate);
-				bookBeans.add(bookBean);
-			}
-			for (BookBean bean : bookBeans) {
-				st2.setString(1, bean.getIsbn());
-				rsStock = st2.executeQuery();
-				while (rsStock.next()) {
-					int stockId = rsStock.getInt("id");
-					String bookIsbn = rsStock.getString("book_isbn");
-					java.sql.Date inDate = rsStock.getDate("in_date");
-					java.sql.Date outDate = rsStock.getDate("out_date");
-					String status = rsStock.getString("status");
-					StockBean sbean = new StockBean(stockId, bookIsbn, inDate,
-							outDate, status, bean);
-					stockBeans.add(sbean);
-
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DAOException("レコードの操作に失敗しました", e);
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
 		} finally {
 			try {
-				if (rsBook != null)
-					rsBook.close();
-
+				if (rs != null)
+					rs.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new DAOException("リソースの開放に失敗しました", e);
@@ -279,6 +213,248 @@ public class BookManageDAO extends MainDAO {
 		return borrowBeans;
 	}
 
+	public int addBook(BookBean bean) throws DAOException {
+		String sqlSelectBook = "SELECT * FROM book WHERE isbn = ?";
+		String sqlInsertBook = "INSERT INTO book VALUES(?,?,?,?,?,?)";
+		String sqlInsertStock = "INSERT INTO stock(book_isbn) VALUES(?)";
+
+		ResultSet rsSBook = null;
+		ResultSet rsBook = null;
+		ResultSet rsStock = null;
+
+		try (Connection con = getConnection();
+				PreparedStatement stSB = con.prepareStatement(sqlSelectBook);
+				PreparedStatement stB = con.prepareStatement(sqlInsertBook);
+				PreparedStatement stS = con.prepareStatement(sqlInsertStock);) {
+			stSB.setString(1, bean.getIsbn());
+			rsSBook = stSB.executeQuery();
+			String isbn = "";
+			while (rsSBook.next()) {
+				isbn = rsSBook.getString("isbn");
+			}
+			if ("".contentEquals(isbn)) {
+				stB.setString(1, bean.getIsbn());
+				stB.setString(2, bean.getName());
+				stB.setInt(3, bean.getClassId());
+				stB.setString(4, bean.getAuthor());
+				stB.setString(5, bean.getPublisher());
+				stB.setDate(6, bean.getReleaseDate());
+				stB.executeQuery();
+			}
+			stS.setString(1, bean.getIsbn());
+			int rows = stS.executeUpdate();
+			return rows;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました", e);
+		} finally {
+			try {
+				if (rsSBook != null) {
+					rsSBook.close();
+				}
+				if (rsBook != null)
+					rsBook.close();
+				if (rsStock != null)
+					rsStock.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+
+	}
+
+	//	public List searchBook(int isbn, String name , int classId, String author,
+	//			String publisher, java.sql.Date releaseDate) throws DAOException {
+	public List<StockBean> searchBook(String isbn, String name, String classId,
+			String author, String publisher,
+			String releaseDate) throws DAOException {
+
+		// Bookテーブルに実行するSQL文
+		String sqlSelectFromBook = "select * from book";
+		ArrayList<String> whereList = new ArrayList<String>();
+		ArrayList<String> valueList = new ArrayList<String>();
+		ArrayList<Integer> valueIntList = new ArrayList<Integer>();
+
+		if (!"".equals(isbn)) {
+			whereList.add("isbn = ?");
+			valueList.add(isbn);
+		}
+		if (!"".equals(name)) {
+			whereList.add("name = ?");
+			valueList.add(name);
+		}
+		if (!"".equals(author)) {
+			whereList.add("author = ?");
+			valueList.add(author);
+		}
+		if (!"".equals(publisher)) {
+			whereList.add("publisher = ?");
+			valueList.add(publisher);
+		}
+		if (!"".equals(releaseDate)) {
+			whereList.add("releaseDate = ?");
+			valueList.add(releaseDate);
+		}
+		if (!"".equals(classId)) {
+			whereList.add("class_id = ?");
+			valueIntList.add(Integer.valueOf(classId));
+		}
+
+		if (whereList.size() != 0) {
+			sqlSelectFromBook += " WHERE " + String.join(" AND ", whereList);
+		}
+
+		ResultSet rsBook = null;
+		List<BookBean> bookBeans = new ArrayList<BookBean>();
+
+		String sqlSelectFromStock = "select * from stock where  book_isbn = ? ";
+		ResultSet rsStock = null;
+		List<StockBean> stockBeans = new ArrayList<StockBean>();
+
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sqlSelectFromBook);
+				PreparedStatement st2 = con.prepareStatement(sqlSelectFromStock)) {
+			for (int i = 0; i < valueList.size(); i++) {
+				st.setString(i + 1, valueList.get(i));
+			}
+			for (int i = valueList.size(); i < valueList.size() + valueIntList.size(); i++) {
+				st.setInt(i + 1, valueIntList.get(i - valueList.size()));
+			}
+			rsBook = st.executeQuery();
+
+			while (rsBook.next()) {
+				String bookIsbn = rsBook.getString("isbn");
+				String bookName = rsBook.getString("name");
+				int bookClassId = rsBook.getInt("class_id");
+				String bookAuthor = rsBook.getString("author");
+				String bookPublisher = rsBook.getString("publisher");
+				java.sql.Date bookReleaseDate = rsBook.getDate("release_date");
+				BookBean bookBean = new BookBean(bookIsbn, bookName, bookClassId,
+						bookAuthor, bookPublisher, bookReleaseDate);
+				bookBeans.add(bookBean);
+			}
+			for (BookBean bean : bookBeans) {
+				st2.setString(1, bean.getIsbn());
+				rsStock = st2.executeQuery();
+				while (rsStock.next()) {
+					int stockId = rsStock.getInt("id");
+					String bookIsbn = rsStock.getString("book_isbn");
+					java.sql.Date inDate = rsStock.getDate("in_date");
+					java.sql.Date outDate = rsStock.getDate("out_date");
+					String status = rsStock.getString("status");
+					StockBean sbean = new StockBean(stockId, bookIsbn, inDate,
+							outDate, status, bean);
+					stockBeans.add(sbean);
+
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました", e);
+		} finally {
+			try {
+				if (rsBook != null)
+					rsBook.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+		return stockBeans;
+	}
+
+	//入力した本のisbnがすでに存在するかを確認
+	public boolean hasisbn(String book_isbn) throws DAOException {
+		String sql2 = "SELECT COUNT(*) as count FROM book WHERE isbn=?";
+		int count = 0;
+		ResultSet rs = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql2);) {
+			st.setString(1, book_isbn);
+			rs = st.executeQuery();
+			rs.next();
+			count = rs.getInt("count");
+			if (count > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+	}
+
+	//isbn入力した本の情報を返す
+	public BookBean getBookInfo(String book_isbn) throws DAOException {
+		String sql = "SELECT * FROM book WHERE isbn=?";
+		ResultSet rs = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setString(1, book_isbn);
+			rs = st.executeQuery();
+			rs.next();
+			String bookIsbn = rs.getString("isbn");
+			String bookName = rs.getString("name");
+			int bookClassId = rs.getInt("class_id");
+			String bookAuthor = rs.getString("author");
+			String bookPublisher = rs.getString("publisher");
+			java.sql.Date bookReleaseDate = rs.getDate("release_date");
+			BookBean bookBean = new BookBean(bookIsbn, bookName, bookClassId,
+					bookAuthor, bookPublisher, bookReleaseDate);
+			return bookBean;
+
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+	}
+
+	//isbn入力した本の情報を返す
+	public void update(String isbn, String name, String classId, String author, String publisher,
+			String releaseDate)
+			throws DAOException {
+		String sql = "UPDATE book SET name='" + name
+				+ "',class_id='" + classId
+				+ "',author='" + author
+				+ "',publisher='" + publisher + "',release_date='" + releaseDate + "' WHERE isbn = ?";
+		ResultSet rs = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setString(1, isbn);
+			st.executeUpdate();
+			return;
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+	}
+
 	public BookBean searchIsbn(String isbn) throws DAOException {
 		String sqlSelectFromBook = "select * from book where isbn=?";
 
@@ -315,4 +491,5 @@ public class BookManageDAO extends MainDAO {
 		}
 		return bookBean;
 	}
+
 }

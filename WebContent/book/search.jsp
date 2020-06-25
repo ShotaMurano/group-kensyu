@@ -9,8 +9,8 @@
 <body>
 
  <h1>資料検索</h1>
-    <a href="" align="right">トップへ戻る</a>
-    <a href="" align="right">ログアウト</a><br>
+    <a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
+    <a href="/group-kensyu/member/Login.jsp" align="right">ログアウト</a><br>
 
     <hr>
 
@@ -26,7 +26,7 @@
 
       <br><br>
       <input type="submit" value="検索">
-       <input type="hidden" name="action" value="search">
+      <input type="hidden" name="action" value="search">
       <br>
     </form>
 
