@@ -2,6 +2,7 @@ package redhot.dao;
 
 import static org.junit.Assert.*;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,21 +66,34 @@ public class BookManageDAOTest {
 	//		String day_later10_format = dateFormat.format(date3);
 	//		Assertions.assertEquals("2020-07-05", day_later10_format);
 	//	}
-
+	//
+	//	@Test
+	//	@DisplayName("今日の日付+10日の取得")
+	//	public void test10() {
+	//		try {
+	//			BookManageDAO dao = new BookManageDAO();
+	//			BookBean bean;
+	//			bean = dao.searchIsbn("9788281642674");
+	//			Assertions.assertEquals("9788281642674", bean.getIsbn());
+	//		} catch (DAOException e) {
+	//			e.printStackTrace();
+	//			fail();
+	//		}
+	//	}
+	//
 	@Test
 	@DisplayName("今日の日付+10日の取得")
 	public void test10() {
 		try {
 			BookManageDAO dao = new BookManageDAO();
-			BookBean bean;
-			bean = dao.searchIsbn("9788281642674");
-			Assertions.assertEquals("9788281642674", bean.getIsbn());
+			BookBean bean = new BookBean("9788281642676", "吾輩は猫である", 9, "夏目漱石", "新潮文庫", Date.valueOf("1995-01-22"));
+			int row = dao.addBook(bean);
+			Assertions.assertEquals(1, row);
 		} catch (DAOException e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
-
 	//	@Test
 	//	@DisplayName("貸出登録したIDが取得できるかの確認（1冊）")
 	//	public void test5() throws DAOException {

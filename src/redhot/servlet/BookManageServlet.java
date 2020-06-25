@@ -1,6 +1,7 @@
 package redhot.servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +59,31 @@ public class BookManageServlet extends HttpServlet {
 			} else if (action.contentEquals("isbn_search")) {
 				String isbn = request.getParameter("isbn");
 				BookBean book = dao.searchIsbn(isbn);
+				book.setIsbn(isbn);
 				request.setAttribute("bookBean", book);
 				gotoPage(request, response, "/book/add.jsp");
+			} else if (action.contentEquals("checkAdd")) {
+				String isbn = request.getParameter("isbn");
+				String name = request.getParameter("name");
+				int classId = Integer.parseInt(request.getParameter("classId"));
+				String author = request.getParameter("author");
+				String publisher = request.getParameter("publisher");
+				Date releaseDate = Date.valueOf(request.getParameter("releaseDate"));
+				BookBean bookBean = new BookBean(isbn, name, classId, author, publisher, releaseDate);
+				request.setAttribute("bookBean", bookBean);
+				gotoPage(request, response, "/book/checkAdd.jsp");
 			} else if (action.equals("add")) {
-				String book_id = request.getParameter("book_id");
+				String isbn = request.getParameter("isbn");
+				String name = request.getParameter("name");
+				int classId = Integer.parseInt(request.getParameter("classId"));
+				String author = request.getParameter("author");
+				String publisher = request.getParameter("publisher");
+				Date releaseDate = Date.valueOf(request.getParameter("releaseDate"));
+				BookBean bookBean = new BookBean(isbn, name, classId, author, publisher, releaseDate);
+				dao.addBook(bookBean);
 
-				System.out.println(book_id);
+				gotoPage(request, response, "/book/finishedAdd.jsp");
+
 				// 削除、仮確定のとき
 			} else if (action.equals("delete_check")) {
 				String book_id = request.getParameter("book_id");
