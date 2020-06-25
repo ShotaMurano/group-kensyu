@@ -20,6 +20,7 @@
 	        <th>電話番号</th>
 	        <th>メールアドレス</th>
 	        <th>生年月日</th>
+	        <th>入会年月日</th>
 	        <th>会員情報の更新</th>
 	        <th>会員の退会</th>
 		</tr>
@@ -32,26 +33,23 @@
 				<td>${member.bean.tellphone}</td>
 				<td>${member.bean.maiAddress}</td>
 				<td>${member.bean.birthday}</td>
+				<td>${member.bean.inDate}</td>
 				<td>
 				<form action="/group-kensyu/MemberServlet" method="post">
-				<input type="hidden" name="book_id" value="${book.id}">
-				<input type="hidden" name="book_name" value="${book.bean.name}">
-				<input type="hidden" name="action" value="delete_check">
-				<input type="submit" value="削除">
-				</form>
-				</td>
-				<td>
-				<form action="/group-kensyu/BookManageServlet" method="post">
-				<input type="hidden" name="book_id" value="${book.id}">
+				<input type="hidden" name="member.bean.id" value="${member.bean.id}">
+				<input type="hidden" name="member.bean.lastName" value="${member.bean.lastName}">
+				<input type="hidden" name="member.bean.firstName" value="${member.bean.firstName}">
 				<input type="hidden" name="action" value="update">
-				<input type="submit" value="変更">
+				<input type="submit" value="更新">
 				</form>
 				</td>
 				<td>
-				<form action="/group-kensyu/BookManageServlet" method="post">
-				<input type="hidden" name="book_id" value="${book.id}">
-				<input type="hidden" name="action" value="preorder">
-				<input type="submit" value="予約">
+				<form action="/group-kensyu/MemberServlet" method="post">
+				<input type="hidden" name="member.bean.id" value="${member.bean.id}">
+				<input type="hidden" name="member.bean.lastName" value="${member.bean.lastName}">
+				<input type="hidden" name="member.bean.firstName" value="${member.bean.firstName}">
+				<input type="hidden" name="action" value="update">
+				<input type="submit" value="退会">
 				</form>
 				</td>
 			</tr>
