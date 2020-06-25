@@ -54,6 +54,10 @@ public class BookManageServlet extends HttpServlet {
 				// リストをリクエストスコープに入れてjspへフォワードする
 				request.setAttribute("items", list);
 				gotoPage(request, response, "/book/searchResults.jsp");
+				// 返却された本の検索とき
+			} else if (action.equals("searchReturnedBook")) {
+
+				gotoPage(request, response, "/book/searchResults.jsp");
 				// 追加のとき
 			} else if (action.equals("add")) {
 				String book_id = request.getParameter("book_id");

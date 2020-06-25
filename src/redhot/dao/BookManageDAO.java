@@ -123,6 +123,44 @@ public class BookManageDAO extends MainDAO {
 		return stockBeans;
 	}
 
+	public List<StockBean> searchReturnedBook() throws DAOException {
+		List<StockBean> stockBeans = new ArrayList<StockBean>();
+		// Bookテーブルに実行するSQL文
+		String sqlSelectReturnedBook = "SELECT * FROM stock WHERE status='returned'";
+		String sqlSelectBookInfo = "SELECT * FROM book WHERE isbn='?'";
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sqlSelectReturnedBook);
+				PreparedStatement st2 = con.prepareStatement(sqlSelectBookInfo);) {
+
+			rs = st.executeQuery();
+			while (rs.next()) {
+				int stockid = rs.getInt("id");
+				String bookid = rs.getString("book_isbn");
+				java.sql.Date in_date = rs.getDate("in_date");
+				String status = rs.getString("status");
+				st2.setString(1, bookid);
+				rs2 = st2.executeQuery();
+
+				StockBean stockBean = new StockBean(stockid, bookid, in_date, in_date, status, null);
+				stockBeans.add(stockBean);
+				rs.close();
+			}
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+		return stockBeans;
+	}
+
 	//本を削除する（廃棄年月日・statusの変更）
 	public String deleteBook(int id) throws DAOException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //年月日にフォーマットする用
