@@ -26,28 +26,28 @@
 		</tr>
 		<c:forEach items="${members}" var="member">
 			<tr>
-				<td>${member.bean.id}</td>
-				<td>${member.bean.lastName}</td>
-				<td>${member.bean.firstName}</td>
-				<td>${member.bean.address}</td>
-				<td>${member.bean.tellphone}</td>
-				<td>${member.bean.maiAddress}</td>
-				<td>${member.bean.birthday}</td>
-				<td>${member.bean.inDate}</td>
+				<td>${member.id}</td>
+				<td>${member.lastName}</td>
+				<td>${member.firstName}</td>
+				<td>${member.address}</td>
+				<td>${member.tellphone}</td>
+				<td>${member.mailAddress}</td>
+				<td>${member.birthday}</td>
+				<td>${member.inDate}</td>
 				<td>
 				<form action="/group-kensyu/MemberServlet" method="post">
-				<input type="hidden" name="member.bean.id" value="${member.bean.id}">
-				<input type="hidden" name="member.bean.lastName" value="${member.bean.lastName}">
-				<input type="hidden" name="member.bean.firstName" value="${member.bean.firstName}">
+				<input type="hidden" name="member.id" value="${member.id}">
+				<input type="hidden" name="member.lastName" value="${member.lastName}">
+				<input type="hidden" name="member.firstName" value="${member.firstName}">
 				<input type="hidden" name="action" value="update">
 				<input type="submit" value="更新">
 				</form>
 				</td>
 				<td>
 				<form action="/group-kensyu/MemberServlet" method="post">
-				<input type="hidden" name="member.bean.id" value="${member.bean.id}">
-				<input type="hidden" name="member.bean.lastName" value="${member.bean.lastName}">
-				<input type="hidden" name="member.bean.firstName" value="${member.bean.firstName}">
+				<input type="hidden" name="member.id" value="${member.id}">
+				<input type="hidden" name="member.lastName" value="${member.lastName}">
+				<input type="hidden" name="member.firstName" value="${member.firstName}">
 				<input type="hidden" name="action" value="update">
 				<input type="submit" value="退会">
 				</form>

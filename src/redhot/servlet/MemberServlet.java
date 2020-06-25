@@ -55,7 +55,7 @@ public class MemberServlet extends HttpServlet {
 				String address = request.getParameter("address");
 				String tellphone = request.getParameter("tellphone");
 				String birthday = request.getParameter("birthday");
-				String mailAddress = request.getParameter("mailAddress");
+				String mailAddress = request.getParameter("mail_Address");
 
 				//"1"なら現会員、"2なら退会済"
 				String isOut = request.getParameter("inout");
