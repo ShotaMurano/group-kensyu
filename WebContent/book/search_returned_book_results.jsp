@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>返却資料一覧</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
+<jsp:include page="../body.jsp" />
 <h1>返却された資料の一覧</h1>
-<a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
-<a href="/group-kensyu/member/Login.jsp" align="right">ログアウト</a><br>
 <hr>
 	<table border="1">
 		<tr>

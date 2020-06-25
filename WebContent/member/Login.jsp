@@ -6,8 +6,9 @@
     <meta charset="utf-8">
     <title>ログイン</title>
 
-  </head>
-  <body>
+<jsp:include page="../header.jsp" />
+</head>
+<body>
 
     <h1>ログインページ</h1>
     <hr>
