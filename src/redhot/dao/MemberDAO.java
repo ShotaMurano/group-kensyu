@@ -161,9 +161,9 @@ public class MemberDAO extends MainDAO {
 			valueIntList.add(Integer.parseInt(id));
 		}
 
-		if ("1".contentEquals(isOut)) {
+		if ("2".equals(isOut)) {
 			whereList.add("out_date IS NOT NULL");
-		} else {
+		} else if ("1".equals(isOut)) {
 			whereList.add("out_date IS NULL");
 		}
 
