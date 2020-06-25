@@ -14,9 +14,11 @@ import javax.servlet.http.HttpSession;
 
 import redhot.bean.BookBean;
 import redhot.bean.BorrowBean;
+import redhot.bean.MemberBean;
 import redhot.bean.StockBean;
 import redhot.dao.BookManageDAO;
 import redhot.dao.DAOException;
+import redhot.dao.MemberDAO;
 import redhot.dao.PreorderDAO;
 
 /**
@@ -77,8 +79,10 @@ public class BookManageServlet extends HttpServlet {
 				String message = dao.deleteBook(Integer.parseInt(book_id));
 				request.setAttribute("message", message);
 				gotoPage(request, response, "/book/delete_confirm.jsp");
+
 				// 変更のとき
 			} else if (action.equals("update")) {
+
 				// 予約のとき
 				//まず予約したい会員番号の入力を受ける
 			} else if (action.equals("preorderForm")) {
@@ -93,10 +97,30 @@ public class BookManageServlet extends HttpServlet {
 				String book_id = request.getParameter("book_id");
 				String book_name = request.getParameter("book_name");
 				String id = request.getParameter("id");
-				request.setAttribute("book_id", book_id);
-				request.setAttribute("book_name", book_name);
-				request.setAttribute("id", id);
-				gotoPage(request, response, "/preorder/preorderCheck.jsp");
+				// 会員IDの入力がなかったらフォーム画面に戻す
+				if (id.length() == 0 || id == null) {
+					request.setAttribute("message", "会員IDを入力してください");
+					gotoPage(request, response, "/preorder/errorPreorderCheck.jsp");
+				// 会員IDの入力があるとき
+				}else {
+					MemberDAO memberDao = new MemberDAO();
+					List<MemberBean> list = memberDao.searchMember(id, null, null, null, null,null,null, null);
+					MemberBean[] b = new MemberBean[list.size()];
+					b[0] = list.get(0);
+					// 存在し、退会していない会員のとき次の処理へ進める
+					if (list.size() != 0 && b[0].getOutDate() == null){
+						request.setAttribute("book_id", book_id);
+						request.setAttribute("book_name", book_name);
+						request.setAttribute("id", id);
+						gotoPage(request, response, "/preorder/preorderCheck.jsp");
+					// 存在しない会員IDまたは退会済み会員IDだったらフォーム画面に戻す
+					} else {
+						request.setAttribute("message", "存在する退会していない会員のIDを入力してください");
+						gotoPage(request, response, "/preorder/errorPreorderCheck.jsp");
+					}
+
+				}
+
 
 				//予約関数を呼んで完了画面の表示
 			} else if (action.equals("preorder")) {
@@ -120,6 +144,7 @@ public class BookManageServlet extends HttpServlet {
 					request.setAttribute("message", "資料の貸し出し、予約の合計は5冊までです。");
 					gotoPage(request, response, "/errInternal.jsp");
 				}
+
 				//貸出のとき
 			} else if (action.equals("rental")) {
 				List<String> book_id = new ArrayList<String>();
