@@ -279,6 +279,58 @@ public class BookManageDAO extends MainDAO {
 		return borrowBeans;
 	}
 
+	public int addBook(BookBean bean) throws DAOException {
+		String sqlSelectBook = "SELECT * FROM book WHERE isbn = ?";
+		String sqlInsertBook = "INSERT INTO book VALUES(?,?,?,?,?,?)";
+		String sqlInsertStock = "INSERT INTO stock(book_isbn) VALUES(?)";
+
+		ResultSet rsSBook = null;
+		ResultSet rsBook = null;
+		ResultSet rsStock = null;
+
+		try (Connection con = getConnection();
+				PreparedStatement stSB = con.prepareStatement(sqlSelectBook);
+				PreparedStatement stB = con.prepareStatement(sqlInsertBook);
+				PreparedStatement stS = con.prepareStatement(sqlInsertStock);) {
+			stSB.setString(1, bean.getIsbn());
+			rsSBook = stSB.executeQuery();
+			String isbn = "";
+			while (rsSBook.next()) {
+				isbn = rsSBook.getString("isbn");
+			}
+			if ("".contentEquals(isbn)) {
+				stB.setString(1, bean.getIsbn());
+				stB.setString(2, bean.getName());
+				stB.setInt(3, bean.getClassId());
+				stB.setString(4, bean.getAuthor());
+				stB.setString(5, bean.getPublisher());
+				stB.setDate(6, bean.getReleaseDate());
+				stB.executeQuery();
+			}
+			stS.setString(1, bean.getIsbn());
+			int rows = stS.executeUpdate();
+			return rows;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました", e);
+		} finally {
+			try {
+				if (rsSBook != null) {
+					rsSBook.close();
+				}
+				if (rsBook != null)
+					rsBook.close();
+				if (rsStock != null)
+					rsStock.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+
+	}
+
 	public BookBean searchIsbn(String isbn) throws DAOException {
 		String sqlSelectFromBook = "select * from book where isbn=?";
 
