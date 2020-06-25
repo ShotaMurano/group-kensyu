@@ -58,7 +58,11 @@ public class MemberServlet extends HttpServlet {
 				List<MemberBean> list = dao.searchMember(id, lastName, firstName, address, tellphone, birthday,
 						mailAddress, isOut);
 				request.setAttribute("members", list);
-				gotoPage(request, response, "/member/searchResults.jsp");
+				if (isOut.contentEquals("1")) {
+					gotoPage(request, response, "/member/searchResultsIn.jsp");
+				} else if (isOut.contentEquals("2")) {
+					gotoPage(request, response, "/member/searchResultsOut.jsp");
+				}
 			} else if (action.contentEquals("updateResults")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String lastName = request.getParameter("lastName");
