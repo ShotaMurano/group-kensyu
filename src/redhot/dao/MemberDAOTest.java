@@ -1,5 +1,6 @@
 package redhot.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -35,22 +36,37 @@ class MemberDAOTest {
 		}
 	}
 
+	//	@Test
+	//	@DisplayName("search")
+	//	void test3() throws DAOException {
+	//		MemberDAO dao = new MemberDAO();
+	//		Assertions.assertEquals(1,
+	//				dao.searchMember("", "河村", "", "", "", "", "", "0").size());
+	//	}
+
+	//	@Test
+	//	@DisplayName("add")
+	//	void test4() throws DAOException {
+	//		MemberDAO dao = new MemberDAO();
+	//
+	//		Assertions.assertEquals(1,
+	//				dao.addMember("内野", "翔太", "神奈川県川崎市", "0802222999", Date.valueOf("1996-01-18"), "murano@gmail.com"));
+	//
+	//	}
+
 	@Test
-	@DisplayName("search")
-	void test3() throws DAOException {
-		MemberDAO dao = new MemberDAO();
-		Assertions.assertEquals(1,
-				dao.searchMember("", "河村", "", "", "", "", "", "0").size());
+	@DisplayName("update")
+	void test4() throws DAOException {
+		MemberDAO memberDao = new MemberDAO();
+
+		//		Assertions.assertEquals(null, dao.searchBook("9788281642674"));
+		int list = memberDao.updateMember(Integer.parseInt("1"), "村野", "翔太", "神奈川県川崎市", "0802222999",
+				Date.valueOf("1993-5-2"),
+				"smurano@gmail.com", Date.valueOf("2020-5-2"));
+
+		System.out.println(list);
+
 	}
 }
-//	@Test
-//	@DisplayName("add")
-//	void test4() throws DAOException {
-//		MemberDAO dao = new MemberDAO();
-//
-//		Assertions.assertEquals(1,
-//				dao.addMember("内野", "翔太", "神奈川県川崎市", "0802222999", Date.valueOf("1996-01-18"), "murano@gmail.com"));
-//
-//	}
 //
 //}
