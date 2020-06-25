@@ -39,6 +39,11 @@
 				<input type="hidden" name="member.id" value="${member.id}">
 				<input type="hidden" name="member.lastName" value="${member.lastName}">
 				<input type="hidden" name="member.firstName" value="${member.firstName}">
+				<input type="hidden" name="member.address" value="${member.address}">
+				<input type="hidden" name="member.tellphone" value="${member.tellphone}">
+				<input type="hidden" name="member.mailAddress" value="${member.mailAddress}">
+				<input type="hidden" name="member.birthday" value="${member.birthday}">
+				<input type="hidden" name="member.inDate" value="${member.inDate}">
 				<input type="hidden" name="action" value="update">
 				<input type="submit" value="更新">
 				</form>

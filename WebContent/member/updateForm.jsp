@@ -3,7 +3,7 @@
 <%@ page import="java.sql.*, redhot.tool.MyDBAccess"%>
 <!DOCTYPE html>
 <%
-int id = Integer.parseInt(request.getParameter("id"));
+int id = Integer.parseInt(request.getParameter("member.id"));
 
 String lastName = "";
 String firstName = "";
@@ -28,7 +28,10 @@ if (id != 0){
 	tellphone = rs.getString("tellphone");
 	birthday = (rs.getDate("birthday")).toString();
 	mailAddress = rs.getString("mail_address");
+	if(rs.getDate("out_date")!=null)
+	{
 	outDate = (rs.getDate("out_date")).toString();
+	}
 
 	db.close();
 }
@@ -45,6 +48,7 @@ if (id != 0){
 
     <hr>
     <form action="/group-kensyu/MemberServlet" method="post">
+ 	<input type="hidden" name="id" value="<%= String.valueOf(id)%>">
       苗字　　　　　：<input type="text" name="lastName" value="<%= lastName %>">
       名前　　　　　：<input type="text" name="firstName" value="<%= firstName %>"><br>
       住所　　　　　：<input type="text" name="address" value="<%= address %>"><br>
@@ -52,8 +56,7 @@ if (id != 0){
       メールアドレス：<input type="text" name="mailAddress" value="<%= mailAddress %>"><br>
       生年月日　　　：<input type="text" name="birthday" value="<%= birthday %>"><br>
       退会年月日　　：<input type="text" name="outDate" value="<%= outDate %>"><br>
-     <!--  身分証明書　　：<input type="file" name="" value=""><br><br>-->
-     <input type="hidden" name="action" value="updateResult">
+     <input type="hidden" name="action" value="updateResults">
       <input type="submit" name="" value="確認画面へ"><br>
     </form>
   </body>

@@ -40,7 +40,7 @@ public class MemberServlet extends HttpServlet {
 				dao.addMember(lastName, firstName, address, tellphone, birthday, mailAddress);
 				List<MemberBean> list = dao.findAll();
 				request.setAttribute("members", list);
-				gotoPage(request, response, "/member/memberRegistration.jsp");
+				gotoPage(request, response, "/member/addMember.jsp");
 				//			} else if (action.contentEquals("delete")) {
 				//				int code = Integer.parseInt(request.getParameter("code"));
 				//				dao.deleteByPrimaryKey(code);
@@ -64,19 +64,22 @@ public class MemberServlet extends HttpServlet {
 						mailAddress, isOut);
 				request.setAttribute("members", list);
 				gotoPage(request, response, "/member/searchResults.jsp");
-			} else if (action.contentEquals("updateResult")) {
+			} else if (action.contentEquals("updateResults")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				String lastName = request.getParameter("lastName");
 				String firstName = request.getParameter("firstName");
 				String address = request.getParameter("address");
 				String tellphone = request.getParameter("tellphone");
 				Date birthday = Date.valueOf(request.getParameter("birthday"));
-				String mailAddress = request.getParameter("mail_Address");
-				Date outDate = Date.valueOf(request.getParameter("outDate"));
+				String mailAddress = request.getParameter("mailAddress");
+				Date outDate = null;
+				if (request.getParameter("outDate") != "") {
+					outDate = Date.valueOf(request.getParameter("outDate"));
+				}
 
 				dao.updateMember(id, lastName, firstName, address, tellphone, birthday, mailAddress, outDate);
 				List<MemberBean> list = dao.findAll();
-				request.setAttribute("members", list);
+				request.setAttribute("updates", list);
 				gotoPage(request, response, "/member/updateResults.jsp");
 
 			} else if (action.contentEquals("update")) {
