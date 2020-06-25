@@ -213,19 +213,15 @@ public class BookManageDAO extends MainDAO {
 		return borrowBeans;
 	}
 
-	public int addBook(BookBean bean) throws DAOException {
+	public String addBook(BookBean bean) throws DAOException {
 		String sqlSelectBook = "SELECT * FROM book WHERE isbn = ?";
 		String sqlInsertBook = "INSERT INTO book VALUES(?,?,?,?,?,?)";
-		String sqlInsertStock = "INSERT INTO stock(book_isbn) VALUES(?)";
 
 		ResultSet rsSBook = null;
 		ResultSet rsBook = null;
-		ResultSet rsStock = null;
-
 		try (Connection con = getConnection();
 				PreparedStatement stSB = con.prepareStatement(sqlSelectBook);
-				PreparedStatement stB = con.prepareStatement(sqlInsertBook);
-				PreparedStatement stS = con.prepareStatement(sqlInsertStock);) {
+				PreparedStatement stB = con.prepareStatement(sqlInsertBook);) {
 			stSB.setString(1, bean.getIsbn());
 			rsSBook = stSB.executeQuery();
 			String isbn = "";
@@ -239,11 +235,9 @@ public class BookManageDAO extends MainDAO {
 				stB.setString(4, bean.getAuthor());
 				stB.setString(5, bean.getPublisher());
 				stB.setDate(6, bean.getReleaseDate());
-				stB.executeQuery();
+				stB.executeUpdate();
 			}
-			stS.setString(1, bean.getIsbn());
-			int rows = stS.executeUpdate();
-			return rows;
+			return isbn;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOException("レコードの操作に失敗しました", e);
@@ -254,6 +248,30 @@ public class BookManageDAO extends MainDAO {
 				}
 				if (rsBook != null)
 					rsBook.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+
+	}
+
+	public int addStock(String isbn) throws DAOException {
+		String sqlInsertStock = "INSERT INTO stock(book_isbn) VALUES(?)";
+
+		ResultSet rsStock = null;
+
+		try (Connection con = getConnection();
+				PreparedStatement stS = con.prepareStatement(sqlInsertStock);) {
+			stS.setString(1, isbn);
+			int rows = stS.executeUpdate();
+			return rows;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました", e);
+		} finally {
+			try {
 				if (rsStock != null)
 					rsStock.close();
 

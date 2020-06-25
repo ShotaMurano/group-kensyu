@@ -83,6 +83,7 @@ public class BookManageServlet extends HttpServlet {
 				Date releaseDate = Date.valueOf(request.getParameter("releaseDate"));
 				BookBean bookBean = new BookBean(isbn, name, classId, author, publisher, releaseDate);
 				dao.addBook(bookBean);
+				dao.addStock(isbn);
 
 				gotoPage(request, response, "/book/finishedAdd.jsp");
 
