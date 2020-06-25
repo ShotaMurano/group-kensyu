@@ -22,7 +22,8 @@
 	        <th>メールアドレス</th>
 	        <th>生年月日</th>
 	        <th>入会年月日</th>
-	        <th>会員情報の更新</th>
+	        <th>退会年月日</th>
+	        <th>会員の更新</th>
 	        <th>会員の退会</th>
 		</tr>
 		<c:forEach items="${members}" var="member">
@@ -35,6 +36,7 @@
 				<td>${member.mailAddress}</td>
 				<td>${member.birthday}</td>
 				<td>${member.inDate}</td>
+				<td>${member.outDate}</td>
 				<td>
 				<form action="/group-kensyu/MemberServlet" method="post">
 				<input type="hidden" name="member.id" value="${member.id}">
@@ -45,10 +47,14 @@
 				<input type="hidden" name="member.mailAddress" value="${member.mailAddress}">
 				<input type="hidden" name="member.birthday" value="${member.birthday}">
 				<input type="hidden" name="member.inDate" value="${member.inDate}">
+				<input type="hidden" name="member.outDate" value="${member.outDate}">
 				<input type="hidden" name="action" value="update">
 				<input type="submit" value="更新">
 				</form>
 				</td>
+
+
+
 				<td>
 				<form action="/group-kensyu/MemberServlet" method="post">
 				<input type="hidden" name="member.id" value="${member.id}">
