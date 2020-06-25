@@ -6,9 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>会員更新</title>
+<jsp:include page="/header.jsp" />
 </head>
 <body>
-
+<jsp:include page="/body.jsp" />
 <hr>
 	<table border="1">
 		<tr>
