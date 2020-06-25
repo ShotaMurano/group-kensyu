@@ -83,7 +83,7 @@ public class BookManageDAOTest {
 	//
 	@Test
 	@DisplayName("今日の日付+10日の取得")
-	public void test10() {
+	public void test21() {
 		try {
 			BookManageDAO dao = new BookManageDAO();
 			BookBean bean = new BookBean("9788281642676", "吾輩は猫である", 9, "夏目漱石", "新潮文庫", Date.valueOf("1995-01-22"));
