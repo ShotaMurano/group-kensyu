@@ -8,6 +8,9 @@
 <title>資料検索</title>
 </head>
 <body>
+<a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
+<a href="/group-kensyu/member/Login.jsp" align="right">ログアウト</a><br>
+<hr>
 
 	<jsp:include page="search.jsp" />
 	<hr>

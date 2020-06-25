@@ -9,8 +9,9 @@
 </head>
 <body>
 <h1>資料を予約したい会員のIDを入力してください</h1>
-<a href="" align="right">トップへ戻る</a>
-<a href="" align="right">ログアウト</a><br>
+<a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
+<a href="/group-kensyu/member/Login.jsp" align="right">ログアウト</a><br>
+
 <hr>
 
 <p>
