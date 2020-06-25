@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>入力エラー</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
+<jsp:include page="../body.jsp" />
 
 <h1><font color="red">${message}</font></h1>
 <jsp:include page="/preorder/preorderForm.jsp" />

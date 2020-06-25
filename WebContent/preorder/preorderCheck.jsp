@@ -6,8 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>予約最終確認</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
+<jsp:include page="../body.jsp" />
 
 <h1>予約内容の最終確認</h1>
    <a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>

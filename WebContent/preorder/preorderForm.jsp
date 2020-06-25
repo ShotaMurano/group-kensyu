@@ -6,8 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>資料の予約</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
+<jsp:include page="../body.jsp" />
 <h1>資料を予約したい会員のIDを入力してください</h1>
 <a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
 <a href="/group-kensyu/member/Login.jsp" align="right">ログアウト</a><br>

@@ -5,9 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>予約完了</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
-
+<jsp:include page="../body.jsp" />
 <a href="" align="right">トップへ戻る</a>
 <a href="" align="right">ログアウト</a><br>
 <hr>

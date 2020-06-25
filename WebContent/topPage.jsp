@@ -6,7 +6,6 @@
 <jsp:include page="header.jsp" />
 </head>
 <body>
-
 <jsp:include page="body.jsp" />
 
 

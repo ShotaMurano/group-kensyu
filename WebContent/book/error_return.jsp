@@ -6,8 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>返却エラー</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
+<jsp:include page="../body.jsp" />
 <jsp:include page="7_1_book_return_info_V2.html" />
     <hr>
 <h2>返却ができませんでした。</h2>
