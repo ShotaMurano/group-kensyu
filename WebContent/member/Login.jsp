@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <title>ログイン</title>
-    <jsp:include page="/header.jsp" />
+
   </head>
   <body>
-  <jsp:include page="/body.jsp" />
+
     <h1>ログインページ</h1>
     <hr>
     <form action="/group-kensyu/LoginServlet" method="post">
