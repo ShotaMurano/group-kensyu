@@ -9,6 +9,19 @@ public class StockBean implements Serializable {
 	private java.sql.Date inDate;
 	private java.sql.Date outDate;
 	private String status;
+	/**
+	 * Preorderは予約状況を取得するために使う
+	 */
+	private String preorderStatus;
+
+	public String getPreorderStatus() {
+		return preorderStatus;
+	}
+
+	public void setPreorderStatus(String preorderStatus) {
+		this.preorderStatus = preorderStatus;
+	}
+
 	private BookBean bean = new BookBean();
 
 	public StockBean() {

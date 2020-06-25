@@ -177,6 +177,7 @@ public class BookManageDAOTest {
 	//		List<BorrowBean> list = dao.returnBook(member_id, book_id);
 	//		Assertions.assertEquals(77, list.get(0).getId());
 	//	}
+
 	//
 	//	@Test
 	//	@DisplayName("本の資料IDが1つも一致しなかったときにListのサイズが0になるかを確認")
@@ -222,5 +223,26 @@ public class BookManageDAOTest {
 	//		Assertions.assertEquals("新潮文庫", bookbean.getPublisher());
 	//		//		Assertions.assertEquals("1995-01-22", bookbean.getReleaseDate());
 	//	}
+
+	@Test
+	@DisplayName("返却された本のIDを取得できるかの確認")
+	public void test13() throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		Assertions.assertEquals(4, dao.searchReturnedBook().get(0).getId());
+	}
+
+	@Test
+	@DisplayName("予約があるかのチェック")
+	public void test14() throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		Assertions.assertEquals("予約あり", dao.searchPreorderStatus(5));
+	}
+
+	@Test
+	@DisplayName("予約がないかのチェック")
+	public void test15() throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		Assertions.assertEquals("予約なし", dao.searchPreorderStatus(4));
+	}
 
 }
