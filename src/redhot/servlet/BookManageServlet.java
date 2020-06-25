@@ -133,6 +133,8 @@ public class BookManageServlet extends HttpServlet {
 				gotoPage(request, response, "/preorder/preorderForm.jsp");
 
 				//次に予約の確認画面
+			} else if (action.equals("searchReturnedBook")) {
+				gotoPage(request, response, "/book/searchResults.jsp");
 			} else if (action.equals("preorderCheck")) {
 				String book_id = request.getParameter("book_id");
 				String book_name = request.getParameter("book_name");
@@ -141,26 +143,25 @@ public class BookManageServlet extends HttpServlet {
 				if (id.length() == 0 || id == null) {
 					request.setAttribute("message", "会員IDを入力してください");
 					gotoPage(request, response, "/preorder/errorPreorderCheck.jsp");
-				// 会員IDの入力があるとき
-				}else {
+					// 会員IDの入力があるとき
+				} else {
 					MemberDAO memberDao = new MemberDAO();
-					List<MemberBean> list = memberDao.searchMember(id, null, null, null, null,null,null, null);
+					List<MemberBean> list = memberDao.searchMember(id, null, null, null, null, null, null, null);
 					MemberBean[] b = new MemberBean[list.size()];
 					b[0] = list.get(0);
 					// 存在し、退会していない会員のとき次の処理へ進める
-					if (list.size() != 0 && b[0].getOutDate() == null){
+					if (list.size() != 0 && b[0].getOutDate() == null) {
 						request.setAttribute("book_id", book_id);
 						request.setAttribute("book_name", book_name);
 						request.setAttribute("id", id);
 						gotoPage(request, response, "/preorder/preorderCheck.jsp");
-					// 存在しない会員IDまたは退会済み会員IDだったらフォーム画面に戻す
+						// 存在しない会員IDまたは退会済み会員IDだったらフォーム画面に戻す
 					} else {
 						request.setAttribute("message", "存在する退会していない会員のIDを入力してください");
 						gotoPage(request, response, "/preorder/errorPreorderCheck.jsp");
 					}
 
 				}
-
 
 				//予約関数を呼んで完了画面の表示
 			} else if (action.equals("preorder")) {
