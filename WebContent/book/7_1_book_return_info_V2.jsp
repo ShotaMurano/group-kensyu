@@ -1,13 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>返却</title>
-  </head>
-  <body>
+<jsp:include page="../header.jsp" />
+</head>
+<body>
+<jsp:include page="../body.jsp" />
     <h1>返却入力</h1>
-    <a href="" align="right">トップへ戻る</a>
-    <a href="" align="right">ログアウト</a><br>
 
     <hr>
     <form action="/group-kensyu/BookManageServlet" method="post">

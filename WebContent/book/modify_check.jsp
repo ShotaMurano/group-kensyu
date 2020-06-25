@@ -11,8 +11,6 @@
 <body>
 <jsp:include page="../body.jsp" />
 <h1>資料情報の変更</h1>
-    <a href="" align="right">トップへ戻る</a>
-    <a href="" align="right">ログアウト</a><br>
 
 	<form action="/group-kensyu/BookManageServlet" method="post">
       ISBN　　　　　　：${bookinfo.isbn}<br>

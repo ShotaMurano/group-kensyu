@@ -11,8 +11,6 @@
 <body>
 <jsp:include page="../body.jsp" />
 <h1>本の削除、最終確認画面</h1>
-<a href="" align="right">トップへ戻る</a>
-<a href="" align="right">ログアウト</a><br>
 
 <c:forEach items="${book_id}" var="book_id">
 <h2>ID：${book_id}</h2>

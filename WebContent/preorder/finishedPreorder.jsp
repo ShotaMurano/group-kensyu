@@ -9,8 +9,6 @@
 </head>
 <body>
 <jsp:include page="../body.jsp" />
-<a href="" align="right">トップへ戻る</a>
-<a href="" align="right">ログアウト</a><br>
 <hr>
 
 <h2>資料の予約が完了しました。</h2><br>
