@@ -5,11 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>予約完了</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
-
-<a href="" align="right">トップへ戻る</a>
-<a href="" align="right">ログアウト</a><br>
+<jsp:include page="../body.jsp" />
 <hr>
 
 <h2>資料の予約が完了しました。</h2><br>

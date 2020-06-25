@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>情報更新</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
+<jsp:include page="../body.jsp" />
 <h1>本の情報更新、完了画面</h1>
-<a href="" align="right">トップへ戻る</a>
-<a href="" align="right">ログアウト</a><br>
 <h2>本の情報を以下の通り変更しました</h2>
 
 <table border="1">

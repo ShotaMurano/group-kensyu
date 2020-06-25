@@ -3,15 +3,12 @@ package redhot.dao;
 import static org.junit.Assert.*;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 
 import redhot.bean.BookBean;
-import redhot.bean.BorrowBean;
 
 public class BookManageDAOTest {
 	//
@@ -24,13 +21,13 @@ public class BookManageDAOTest {
 	//
 	//	}
 
-	//	@Test
-	//	@DisplayName("全検索")
-	//	public void test4() throws DAOException {
-	//		BookManageDAO dao = new BookManageDAO();
-	//		Assertions.assertEquals(6,
-	//				dao.searchBook("", "", "", "", "", "").size());
-	//	}
+	@Test
+	@DisplayName("全検索")
+	public void test4() throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		Assertions.assertEquals(6,
+				dao.searchBook("", "", "", "", "", "").size());
+	}
 	//
 	//	@Test
 	//	@DisplayName("本の更新処理が無事に終了するか確認")
@@ -82,11 +79,11 @@ public class BookManageDAOTest {
 	//	}
 	//
 	@Test
-	@DisplayName("今日の日付+10日の取得")
+	@DisplayName("既存ない値のインサート")
 	public void test21() {
 		try {
 			BookManageDAO dao = new BookManageDAO();
-			BookBean bean = new BookBean("9788281642676", "吾輩は猫である", 9, "夏目漱石", "新潮文庫", Date.valueOf("1995-01-22"));
+			BookBean bean = new BookBean("9788281642999", "吾輩は猫である", 9, "夏目漱石", "新潮文庫", Date.valueOf("1995-01-22"));
 			int row = dao.addBook(bean);
 			Assertions.assertEquals(1, row);
 		} catch (DAOException e) {
@@ -181,50 +178,51 @@ public class BookManageDAOTest {
 	//		Assertions.assertEquals(77, list.get(0).getId());
 	//	}
 
-	@Test
-	@DisplayName("本の資料IDが1つも一致しなかったときにListのサイズが0になるかを確認")
-	public void test8() throws DAOException {
-		BookManageDAO dao = new BookManageDAO();
-		List<String> book_id = new ArrayList<String>();
-		book_id.add("5");
-		int member_id = 1;
-		List<BorrowBean> list = dao.returnBook(member_id, book_id);
-		Assertions.assertEquals(0, list.size());
-	}
-
-	@Test
-	@DisplayName("本のISBNが存在したときTrueを返すかの確認")
-	public void test9() throws DAOException {
-		BookManageDAO dao = new BookManageDAO();
-		Assertions.assertEquals(true, dao.hasisbn("9788281642674"));
-	}
-
-	@Test
-	@DisplayName("本のISBNが存在しないときFalseを返すかの確認")
-	public void test10() throws DAOException {
-		BookManageDAO dao = new BookManageDAO();
-		Assertions.assertEquals(false, dao.hasisbn("978828164267"));
-	}
-
-	@Test
-	@DisplayName("本のISBNがNullのときFalseを返すかの確認")
-	public void test11() throws DAOException {
-		BookManageDAO dao = new BookManageDAO();
-		Assertions.assertEquals(false, dao.hasisbn(""));
-	}
-
-	@Test
-	@DisplayName("入力したISBNの本情報を取得できるかの確認")
-	public void test12() throws DAOException {
-		BookManageDAO dao = new BookManageDAO();
-		BookBean bookbean = dao.getBookInfo("9788281642674");
-		Assertions.assertEquals("9788281642674", bookbean.getIsbn());
-		Assertions.assertEquals("吾輩は犬である", bookbean.getName());
-		Assertions.assertEquals(9, bookbean.getClassId());
-		Assertions.assertEquals("夏目漱石", bookbean.getAuthor());
-		Assertions.assertEquals("新潮文庫", bookbean.getPublisher());
-		//		Assertions.assertEquals("1995-01-22", bookbean.getReleaseDate());
-	}
+	//
+	//	@Test
+	//	@DisplayName("本の資料IDが1つも一致しなかったときにListのサイズが0になるかを確認")
+	//	public void test8() throws DAOException {
+	//		BookManageDAO dao = new BookManageDAO();
+	//		List<String> book_id = new ArrayList<String>();
+	//		book_id.add("5");
+	//		int member_id = 1;
+	//		List<BorrowBean> list = dao.returnBook(member_id, book_id);
+	//		Assertions.assertEquals(0, list.size());
+	//	}
+	//
+	//	@Test
+	//	@DisplayName("本のISBNが存在したときTrueを返すかの確認")
+	//	public void test9() throws DAOException {
+	//		BookManageDAO dao = new BookManageDAO();
+	//		Assertions.assertEquals(true, dao.hasisbn("9788281642674"));
+	//	}
+	//
+	//	@Test
+	//	@DisplayName("本のISBNが存在しないときFalseを返すかの確認")
+	//	public void test10() throws DAOException {
+	//		BookManageDAO dao = new BookManageDAO();
+	//		Assertions.assertEquals(false, dao.hasisbn("978828164267"));
+	//	}
+	//
+	//	@Test
+	//	@DisplayName("本のISBNがNullのときFalseを返すかの確認")
+	//	public void test11() throws DAOException {
+	//		BookManageDAO dao = new BookManageDAO();
+	//		Assertions.assertEquals(false, dao.hasisbn(""));
+	//	}
+	//
+	//	@Test
+	//	@DisplayName("入力したISBNの本情報を取得できるかの確認")
+	//	public void test12() throws DAOException {
+	//		BookManageDAO dao = new BookManageDAO();
+	//		BookBean bookbean = dao.getBookInfo("9788281642674");
+	//		Assertions.assertEquals("9788281642674", bookbean.getIsbn());
+	//		Assertions.assertEquals("吾輩は猫である", bookbean.getName());
+	//		Assertions.assertEquals(9, bookbean.getClassId());
+	//		Assertions.assertEquals("夏目漱石", bookbean.getAuthor());
+	//		Assertions.assertEquals("新潮文庫", bookbean.getPublisher());
+	//		//		Assertions.assertEquals("1995-01-22", bookbean.getReleaseDate());
+	//	}
 
 	@Test
 	@DisplayName("返却された本のIDを取得できるかの確認")

@@ -43,9 +43,6 @@ if (id != 0){
   </head>
   <body>
     <h1>会員情報の更新</h1>
-    <a href="" align="right">トップへ戻る</a>
-    <a href="" align="right">ログアウト</a><br>
-
     <hr>
     <form action="/group-kensyu/MemberServlet" method="post">
  	<input type="hidden" name="id" value="<%= String.valueOf(id)%>">

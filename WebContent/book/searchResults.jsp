@@ -6,10 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>資料検索</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
-<a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
-<a href="/group-kensyu/member/Login.jsp" align="right">ログアウト</a><br>
+<jsp:include page="../body.jsp" />
 <hr>
 
 	<jsp:include page="search.jsp" />

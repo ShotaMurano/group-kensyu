@@ -70,7 +70,7 @@ class MemberDAOTest {
 
 	@Test
 	@DisplayName("search 存在しない会員の検索")
-	void test4() throws DAOException {
+	void test91() throws DAOException {
 		MemberDAO dao = new MemberDAO();
 		List<MemberBean> list = dao.searchMember("2", "", "", "", "", "", "", "");
 		System.out.println("search 存在しない会員の検索");
@@ -89,13 +89,12 @@ class MemberDAOTest {
 		MemberBean[] b = new MemberBean[list.size()];
 		b[0] = list.get(0);
 		System.out.println(b[0].getOutDate());
-//		for (int i = 0; i < list.size(); i++) {
-//			b[i] = list.get(i);
-//			System.out.println(b[i].getOutDate());
-//		}
-//		Assertions.assertEquals(null, list.get(9));
+		//		for (int i = 0; i < list.size(); i++) {
+		//			b[i] = list.get(i);
+		//			System.out.println(b[i].getOutDate());
+		//		}
+		//		Assertions.assertEquals(null, list.get(9));
 	}
-
 
 }
 //

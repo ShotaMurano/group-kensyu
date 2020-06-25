@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>資料の予約</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
+<jsp:include page="../body.jsp" />
 <h1>資料を予約したい会員のIDを入力してください</h1>
-<a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
-<a href="/group-kensyu/member/Login.jsp" align="right">ログアウト</a><br>
 
 <hr>
 
@@ -28,9 +28,9 @@
 <form action="/group-kensyu/BookManageServlet" method="post">
 <input type="hidden" name="book_id" value="${book_id}">
 <input type="hidden" name="book_name" value="${book_name}">
-<input type="hidden" name="action" value="preorderCheck">
 会員ID 　　　　　：<input type="text" name="id" value="">
 <input type="submit" value="入力">
+<input type="hidden" name="action" value="preorderCheck">
 
 </form>
 

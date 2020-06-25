@@ -7,9 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>返却処理完了</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
-<jsp:include page="7_1_book_return_info_V2.html" />
+<jsp:include page="../body.jsp" />
+<jsp:include page="7_1_book_return_info_V2.jsp" />
     <hr>
 	<h2>返却処理が完了しました</h2>
 	<table border="1">
