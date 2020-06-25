@@ -52,8 +52,8 @@
 				</td>
 				<td>
 				<form action="/group-kensyu/BookManageServlet" method="post">
-				<input type="hidden" name="book_id" value="${book.id}">
-				<input type="hidden" name="action" value="update">
+				<input type="hidden" name="book_isbn" value="${book.bookIsbn}">
+				<input type="hidden" name="action" value="update_check">
 				<input type="submit" value="変更">
 				</form>
 				</td>

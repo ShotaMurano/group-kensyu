@@ -1,6 +1,7 @@
 package redhot.servlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,12 +61,31 @@ public class BookManageServlet extends HttpServlet {
 			} else if (action.contentEquals("isbn_search")) {
 				String isbn = request.getParameter("isbn");
 				BookBean book = dao.searchIsbn(isbn);
+				book.setIsbn(isbn);
 				request.setAttribute("bookBean", book);
 				gotoPage(request, response, "/book/add.jsp");
+			} else if (action.contentEquals("checkAdd")) {
+				String isbn = request.getParameter("isbn");
+				String name = request.getParameter("name");
+				int classId = Integer.parseInt(request.getParameter("classId"));
+				String author = request.getParameter("author");
+				String publisher = request.getParameter("publisher");
+				Date releaseDate = Date.valueOf(request.getParameter("releaseDate"));
+				BookBean bookBean = new BookBean(isbn, name, classId, author, publisher, releaseDate);
+				request.setAttribute("bookBean", bookBean);
+				gotoPage(request, response, "/book/checkAdd.jsp");
 			} else if (action.equals("add")) {
-				String book_id = request.getParameter("book_id");
+				String isbn = request.getParameter("isbn");
+				String name = request.getParameter("name");
+				int classId = Integer.parseInt(request.getParameter("classId"));
+				String author = request.getParameter("author");
+				String publisher = request.getParameter("publisher");
+				Date releaseDate = Date.valueOf(request.getParameter("releaseDate"));
+				BookBean bookBean = new BookBean(isbn, name, classId, author, publisher, releaseDate);
+				dao.addBook(bookBean);
 
-				System.out.println(book_id);
+				gotoPage(request, response, "/book/finishedAdd.jsp");
+
 				// 削除、仮確定のとき
 			} else if (action.equals("delete_check")) {
 				String book_id = request.getParameter("book_id");
@@ -81,8 +101,28 @@ public class BookManageServlet extends HttpServlet {
 				gotoPage(request, response, "/book/delete_confirm.jsp");
 
 				// 変更のとき
+			} else if (action.equals("update_check")) {
+				String book_isbn = request.getParameter("book_isbn");
+				BookBean bookbean = updateBook(book_isbn);
+				request.setAttribute("bookinfo", bookbean);
+				gotoPage(request, response, "/book/modify_check.jsp");
+				//変更確定のとき
 			} else if (action.equals("update")) {
 
+				String isbn = request.getParameter("isbn");
+				String name = request.getParameter("name");
+				String classId = request.getParameter("classId");
+				String author = request.getParameter("author");
+				String publisher = request.getParameter("publisher");
+				String releaseDate = request.getParameter("releaseDate");
+				dao.update(isbn, name, classId, author, publisher, releaseDate);
+				request.setAttribute("isbn", isbn);
+				request.setAttribute("name", name);
+				request.setAttribute("classId", classId);
+				request.setAttribute("author", author);
+				request.setAttribute("publisher", publisher);
+				request.setAttribute("releaseDate", releaseDate);
+				gotoPage(request, response, "/book/modify_confirm.jsp");
 				// 予約のとき
 				//まず予約したい会員番号の入力を受ける
 			} else if (action.equals("preorderForm")) {
@@ -189,8 +229,6 @@ public class BookManageServlet extends HttpServlet {
 				} else {
 					gotoPage(request, response, "/book/error_return.jsp");
 				}
-
-				// 追加のとき
 			}
 		} catch (DAOException e) {
 			e.printStackTrace();
@@ -199,6 +237,17 @@ public class BookManageServlet extends HttpServlet {
 
 		////		List<BookBean> list = dao.findAll();
 
+	}
+
+	private BookBean updateBook(String book_isbn) throws DAOException {
+		BookManageDAO dao = new BookManageDAO();
+		if (dao.hasisbn(book_isbn) == true) {
+			BookBean bookbean = dao.getBookInfo(book_isbn);
+			return bookbean;
+		} else {
+			//			dao.addNewBook(book_isbn);
+			return null;
+		}
 	}
 
 	private void gotoPage(HttpServletRequest request, HttpServletResponse response, String page)

@@ -15,7 +15,7 @@
 
     <form action="/group-kensyu/BookManageServlet" method="post">
       <p>
-      ISBN　　　　　　：<input type="text" name="isbn"><br>
+      ISBN　　　　　　：<input type="text" name="isbn" required><br>
 
       <br><br>
       <input type="submit" value="ISBN検索">

@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,14 +15,21 @@
     <form action="/group-kensyu/BookManageServlet" method="post">
       <p>
       ISBN　　　　　　：<input type="text" name="isbn" value=${bookBean.isbn} required><br>
+      <input type="hidden">
       資料名 　　　　　：<input type="text" name="name" value=${bookBean.name} required><br>
+      <input type="hidden">
       分類コード　　　 ：<input type="text" name="classId" value=${bookBean.classId} required><br>
+      <input type="hidden">
       著者　　　　　　 ：<input type="text" name="author" value=${bookBean.author} required><br>
+      <input type="hidden">
       出版社　　　　　 ：<input type="text" name="publisher" value=${bookBean.publisher} required><br>
+      <input type="hidden">
       出版日　　　　　 ：<input type="text" name="releaseDate" value=${bookBean.releaseDate} required><br>
+      <input type="hidden">
       <br><br>
-      <input type="submit" value="追加">
-       <input type="hidden" name="action" value="checkAdd">
+      <h2>以上でよろしいですか？</h2><br>
+      <input type="submit" value="確定">
+       <input type="hidden" name="action" value="add">
       <br>
     </form>
 </body>

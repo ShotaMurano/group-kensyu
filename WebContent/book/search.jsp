@@ -26,7 +26,7 @@
 
       <br><br>
       <input type="submit" value="検索">
-       <input type="hidden" name="action" value="search">
+      <input type="hidden" name="action" value="search">
       <br>
     </form>
 
