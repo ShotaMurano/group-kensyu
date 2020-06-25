@@ -279,4 +279,40 @@ public class BookManageDAO extends MainDAO {
 		return borrowBeans;
 	}
 
+	public BookBean searchIsbn(String isbn) throws DAOException {
+		String sqlSelectFromBook = "select * from book where isbn=?";
+
+		ResultSet rsBook = null;
+		BookBean bookBean = new BookBean();
+
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sqlSelectFromBook)) {
+			st.setString(1, isbn);
+			rsBook = st.executeQuery();
+			while (rsBook.next()) {
+				String bookIsbn = rsBook.getString("isbn");
+				String bookName = rsBook.getString("name");
+				int bookClassId = rsBook.getInt("class_id");
+				String bookAuthor = rsBook.getString("author");
+				String bookPublisher = rsBook.getString("publisher");
+				java.sql.Date bookReleaseDate = rsBook.getDate("release_date");
+				bookBean = new BookBean(bookIsbn, bookName, bookClassId,
+						bookAuthor, bookPublisher, bookReleaseDate);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOException("レコードの操作に失敗しました", e);
+		} finally {
+			try {
+				if (rsBook != null)
+					rsBook.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+		return bookBean;
+	}
 }
