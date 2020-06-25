@@ -11,8 +11,6 @@
 <jsp:include page="../body.jsp" />
 
  <h1>返却された資料検索</h1>
-    <a href="" align="right">トップへ戻る</a>
-    <a href="" align="right">ログアウト</a><br>
 
     <hr>
 

@@ -10,8 +10,6 @@
 <body>
 <jsp:include page="../body.jsp" />
 <h1>貸出入力</h1>
-    <a href="" align="right">トップへ戻る</a>
-    <a href="" align="right">ログアウト</a><br>
 
     <hr>
     <form action="/group-kensyu/BookManageServlet" method="post">
