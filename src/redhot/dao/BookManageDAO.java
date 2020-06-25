@@ -278,7 +278,94 @@ public class BookManageDAO extends MainDAO {
 		}
 		return borrowBeans;
 	}
+	//入力した本のisbnがすでに存在するかを確認
+	public boolean hasisbn(String book_isbn) throws DAOException {
+		String sql2 = "SELECT COUNT(*) as count FROM book WHERE isbn=?";
+		int count = 0;
+		ResultSet rs = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql2);) {
+			st.setString(1, book_isbn);
+			rs = st.executeQuery();
+			rs.next();
+			count = rs.getInt("count");
+			if (count > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+	}
 
+	//isbn入力した本の情報を返す
+	public BookBean getBookInfo(String book_isbn) throws DAOException {
+		String sql = "SELECT * FROM book WHERE isbn=?";
+		ResultSet rs = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setString(1, book_isbn);
+			rs = st.executeQuery();
+			rs.next();
+			String bookIsbn = rs.getString("isbn");
+			String bookName = rs.getString("name");
+			int bookClassId = rs.getInt("class_id");
+			String bookAuthor = rs.getString("author");
+			String bookPublisher = rs.getString("publisher");
+			java.sql.Date bookReleaseDate = rs.getDate("release_date");
+			BookBean bookBean = new BookBean(bookIsbn, bookName, bookClassId,
+					bookAuthor, bookPublisher, bookReleaseDate);
+			return bookBean;
+
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+	}
+
+	//isbn入力した本の情報を返す
+	public void update(String isbn, String name, String classId, String author, String publisher,
+			String releaseDate)
+			throws DAOException {
+		String sql = "UPDATE book SET name='" + name
+				+ "',class_id='" + classId
+				+ "',author='" + author
+				+ "',publisher='" + publisher + "',release_date='" + releaseDate + "' WHERE isbn = ?";
+		ResultSet rs = null;
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(sql);) {
+			st.setString(1, isbn);
+			st.executeUpdate();
+			return;
+		} catch (SQLException e) {
+			throw new DAOException("レコードの取得に失敗しました", e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException("リソースの開放に失敗しました", e);
+			}
+		}
+	}
+  
 	public BookBean searchIsbn(String isbn) throws DAOException {
 		String sqlSelectFromBook = "select * from book where isbn=?";
 
@@ -315,4 +402,5 @@ public class BookManageDAO extends MainDAO {
 		}
 		return bookBean;
 	}
+
 }
