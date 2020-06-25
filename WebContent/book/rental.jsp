@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>貸出入力</title>
+<jsp:include page="../header.jsp" />
 </head>
 <body>
+<jsp:include page="../body.jsp" />
 <h1>貸出入力</h1>
     <a href="" align="right">トップへ戻る</a>
     <a href="" align="right">ログアウト</a><br>
