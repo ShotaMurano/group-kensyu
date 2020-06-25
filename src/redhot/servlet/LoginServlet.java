@@ -53,6 +53,7 @@ public class LoginServlet extends HttpServlet {
 					session.invalidate();
 					out.println("<html><head><title>Login</title></head><body>");
 					out.println("<h3>ログアウトしました<h3>");
+					out.println("<hr><a href='/group-kensyu/member/Login.jsp'>ログインページに戻る</a>");
 					out.println("</body></html>");
 				}
 
