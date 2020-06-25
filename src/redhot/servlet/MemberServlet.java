@@ -29,7 +29,7 @@ public class MemberServlet extends HttpServlet {
 			String action = request.getParameter("action");
 
 			MemberDAO dao = new MemberDAO();
-			if (action.contentEquals("add")) {
+			if (action.contentEquals("addResults")) {
 				String lastName = request.getParameter("lastName");
 				String firstName = request.getParameter("firstName");
 				String address = request.getParameter("address");
@@ -39,15 +39,10 @@ public class MemberServlet extends HttpServlet {
 
 				dao.addMember(lastName, firstName, address, tellphone, birthday, mailAddress);
 				List<MemberBean> list = dao.findAll();
-				request.setAttribute("members", list);
+				request.setAttribute("add", list);
+				gotoPage(request, response, "/member/addResults.jsp");
+			} else if (action.contentEquals("add")) {
 				gotoPage(request, response, "/member/addMember.jsp");
-				//			} else if (action.contentEquals("delete")) {
-				//				int code = Integer.parseInt(request.getParameter("code"));
-				//				dao.deleteByPrimaryKey(code);
-				//
-				//				List<EmployeeBean> list = dao.findAll();
-				//				request.setAttribute("employees", list);
-				//				gotoPage(request, response, "/showEmployee2.jsp");
 			} else if (action.contentEquals("search")) {
 				String id = request.getParameter("id");
 				String lastName = request.getParameter("lastName");
