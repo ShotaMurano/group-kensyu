@@ -5,13 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>会員検索</title>
+<title>会員追加</title>
 <jsp:include page="/header.jsp" />
 </head>
 <body>
 <jsp:include page="/body.jsp" />
-	<jsp:include page="search.jsp" />
-	<hr>
+<hr>
 	<table border="1">
 		<tr>
 			<th>ID</th>
@@ -22,10 +21,8 @@
 	        <th>メールアドレス</th>
 	        <th>生年月日</th>
 	        <th>入会年月日</th>
-	        <th>会員情報の更新</th>
-	        <th>会員の退会</th>
 		</tr>
-		<c:forEach items="${members}" var="member">
+		<c:forEach items="${add}" var="member">
 			<tr>
 				<td>${member.id}</td>
 				<td>${member.lastName}</td>
@@ -35,29 +32,6 @@
 				<td>${member.mailAddress}</td>
 				<td>${member.birthday}</td>
 				<td>${member.inDate}</td>
-				<td>
-				<form action="/group-kensyu/MemberServlet" method="post">
-				<input type="hidden" name="member.id" value="${member.id}">
-				<input type="hidden" name="member.lastName" value="${member.lastName}">
-				<input type="hidden" name="member.firstName" value="${member.firstName}">
-				<input type="hidden" name="member.address" value="${member.address}">
-				<input type="hidden" name="member.tellphone" value="${member.tellphone}">
-				<input type="hidden" name="member.mailAddress" value="${member.mailAddress}">
-				<input type="hidden" name="member.birthday" value="${member.birthday}">
-				<input type="hidden" name="member.inDate" value="${member.inDate}">
-				<input type="hidden" name="action" value="update">
-				<input type="submit" value="更新">
-				</form>
-				</td>
-				<td>
-				<form action="/group-kensyu/MemberServlet" method="post">
-				<input type="hidden" name="member.id" value="${member.id}">
-				<input type="hidden" name="member.lastName" value="${member.lastName}">
-				<input type="hidden" name="member.firstName" value="${member.firstName}">
-				<input type="hidden" name="action" value="update">
-				<input type="submit" value="退会">
-				</form>
-				</td>
 			</tr>
 		</c:forEach>
 		<!--       <tr><td>1</td><td>97788481642674</td><td>吾輩は猫である</td><td>文学</td><td>夏目漱石</td><td>服部書店</td><td>1905年10月6日</td><th><input type='button' value="削除"></th><th><input type='button' value="変更"></th><th><input type='button' value="予約"></th></tr> -->

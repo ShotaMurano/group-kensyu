@@ -5,11 +5,13 @@
   <head>
     <meta charset="utf-8">
     <title>会員検索</title>
+    <jsp:include page="/header.jsp" />
   </head>
   <body>
-    <h1>会員検索</h1>
-    <a href="/group-kensyu/topPage.jsp" align="right">トップへ戻る</a>
-    <a href="" align="right">ログアウト</a><br>
+  <jsp:include page="/body.jsp" />
+  <h1>会員検索</h1>
+
+
 
     <hr>
 
