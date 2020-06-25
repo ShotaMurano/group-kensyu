@@ -10,7 +10,7 @@
 	</a>
 
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-		<a class="navbar-brand" href="../topPage.jsp">Librarian's Manager</a>
+		<a class="navbar-brand" href="/group-kensyu/topPage.jsp">Librarian's Manager</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarsExampleDefault"
 			aria-controls="navbarsExampleDefault" aria-expanded="false"
@@ -39,7 +39,7 @@
 				<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">予約管理</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">予約状況の確認</a>
+						<a class="dropdown-item" href="/group-kensyu/book/search_returned_book.jsp">返却資料一覧</a>
 					</div></li>
 			</ul>
 			<li class="nav-item dropdown"><a
