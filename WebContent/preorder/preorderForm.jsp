@@ -28,9 +28,9 @@
 <form action="/group-kensyu/BookManageServlet" method="post">
 <input type="hidden" name="book_id" value="${book_id}">
 <input type="hidden" name="book_name" value="${book_name}">
-<input type="hidden" name="action" value="preorderCheck">
 会員ID 　　　　　：<input type="text" name="id" value="">
 <input type="submit" value="入力">
+<input type="hidden" name="action" value="preorderCheck">
 
 </form>
 

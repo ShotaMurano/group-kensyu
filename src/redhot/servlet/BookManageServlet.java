@@ -146,7 +146,7 @@ public class BookManageServlet extends HttpServlet {
 					// 会員IDの入力があるとき
 				} else {
 					MemberDAO memberDao = new MemberDAO();
-					List<MemberBean> list = memberDao.searchMember(id, null, null, null, null, null, null, null);
+					List<MemberBean> list = memberDao.searchMember(id, "", "", "", "", "", "", "");
 					MemberBean[] b = new MemberBean[list.size()];
 					b[0] = list.get(0);
 					// 存在し、退会していない会員のとき次の処理へ進める
