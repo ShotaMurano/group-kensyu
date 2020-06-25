@@ -14,7 +14,7 @@
 
      <hr>
     <form action="/group-kensyu/MemberServlet" method="post">
-      苗字　　　　　：<input type="text" name="lastName" value="">
+      苗字　　　　　：<input type="text" name="lastName" value=""><br>
       名前　　　　　：<input type="text" name="firstName" value=""><br>
       住所　　　　　：<input type="text" name="address" value=""><br>
       電話番号　　　：<input type="text" name="tellphone" value=""><br>
