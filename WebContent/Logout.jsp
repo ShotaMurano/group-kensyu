@@ -8,20 +8,11 @@
 <jsp:include page="/header.jsp" />
 </head>
 <body>
+<h1>ログアウト確認</h1>
 <jsp:include page="/body.jsp" />
 <form action="/group-kensyu/LoginServlet" method="post">
 				<input type="hidden" name="action" value="logout">
 				<input type="submit" value="ログアウト">
-				</form>
-
-				<form action="/group-kensyu/topPage.jsp" method="post">
-				<input type="hidden" name="action" value=>
-				<input type="submit" value="トップページに戻る">
-				</form>
-
-				<form action="/group-kensyu/member/Login.jsp" method="post">
-				<input type="hidden" name="action" value=>
-				<input type="submit" value="ログインページに戻る">
 				</form>
 
 </body>
