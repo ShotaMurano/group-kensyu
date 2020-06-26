@@ -26,8 +26,8 @@
       メールアドレス：<input type="text" name="mail_Address" value=""><br>
       </p>
       会員のステータス：
-      <input type="checkbox" name="inout" value="1">会員
-      <input type="checkbox" name="inout" value="2">退会済み会員
+      <input type="radio" name="inout" value="1" checked="checked">会員
+      <input type="radio" name="inout" value="2">退会済み会員
 
       <br><br>
       <input type="submit" value="検索"><br>
