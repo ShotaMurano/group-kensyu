@@ -5,8 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Input Error</title>
+<jsp:include page="header.jsp" />
 </head>
 <body>
+<jsp:include page="body.jsp" />
+
 
 <h1>${message}</h1>
 
