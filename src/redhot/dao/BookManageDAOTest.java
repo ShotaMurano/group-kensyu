@@ -1,14 +1,8 @@
 package redhot.dao;
 
-import static org.junit.Assert.*;
-
-import java.sql.Date;
-
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-
-import redhot.bean.BookBean;
 
 public class BookManageDAOTest {
 	//
@@ -78,19 +72,19 @@ public class BookManageDAOTest {
 	//		}
 	//	}
 	//
-	@Test
-	@DisplayName("既存ない値のインサート")
-	public void test21() {
-		try {
-			BookManageDAO dao = new BookManageDAO();
-			BookBean bean = new BookBean("9788281642999", "吾輩は猫である", 9, "夏目漱石", "新潮文庫", Date.valueOf("1995-01-22"));
-			int row = dao.addBook(bean);
-			Assertions.assertEquals(1, row);
-		} catch (DAOException e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
+	//	@Test
+	//	@DisplayName("既存ない値のインサート")
+	//	public void test21() {
+	//		try {
+	//			BookManageDAO dao = new BookManageDAO();
+	//			BookBean bean = new BookBean("9788281642999", "吾輩は猫である", 9, "夏目漱石", "新潮文庫", Date.valueOf("1995-01-22"));
+	//			int row = dao.addBook(bean);
+	//			Assertions.assertEquals(1, row);
+	//		} catch (DAOException e) {
+	//			e.printStackTrace();
+	//			fail();
+	//		}
+	//	}
 	//	@Test
 	//	@DisplayName("貸出登録したIDが取得できるかの確認（1冊）")
 	//	public void test5() throws DAOException {
