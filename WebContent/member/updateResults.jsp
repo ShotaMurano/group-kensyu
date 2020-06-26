@@ -21,6 +21,7 @@
 	        <th>メールアドレス</th>
 	        <th>生年月日</th>
 	        <th>入会年月日</th>
+	        <th>退会年月日</th>
 		</tr>
 		<c:forEach items="${updates}" var="member">
 			<tr>
@@ -32,6 +33,7 @@
 				<td>${member.mailAddress}</td>
 				<td>${member.birthday}</td>
 				<td>${member.inDate}</td>
+				<td>${member.outDate}</td>
 			</tr>
 		</c:forEach>
 		<!--       <tr><td>1</td><td>97788481642674</td><td>吾輩は猫である</td><td>文学</td><td>夏目漱石</td><td>服部書店</td><td>1905年10月6日</td><th><input type='button' value="削除"></th><th><input type='button' value="変更"></th><th><input type='button' value="予約"></th></tr> -->
