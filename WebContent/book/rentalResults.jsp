@@ -7,10 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>貸出処理完了</title>
-<jsp:include page="../header.jsp" />
 </head>
 <body>
-<jsp:include page="../body.jsp" />
 <jsp:include page="rental.jsp" />
 	<hr>
 	<h2>貸出処理が完了しました</h2>

@@ -6,10 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>貸出エラー</title>
-<jsp:include page="../header.jsp" />
 </head>
 <body>
-<jsp:include page="../body.jsp" />
 <jsp:include page="rental.jsp" />
     <hr>
 <h2>会員様の貸出数・予約数が${count}冊となりレンタルができません</h2>
