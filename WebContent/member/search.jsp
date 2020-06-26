@@ -6,6 +6,11 @@
     <meta charset="utf-8">
     <title>会員検索</title>
     <jsp:include page="/header.jsp" />
+    <style>
+	form {padding: 10px;}
+	h1 { padding: 10px;}
+	input{ 10px; margin: 10px}
+	</style>
   </head>
   <body>
   <jsp:include page="/body.jsp" />
@@ -17,20 +22,20 @@
 
     <form action="/group-kensyu/MemberServlet" method="post">
       <p>
-      ID　　　　　　：<input type="text" name="id" value=""><br>
-      苗字　　　　　：<input type="text" name="lastName" value=""><br>
-      名前　　　　　：<input type="text" name="firstName" value=""><br>
-      住所　　　　　：<input type="text" name="address" value=""><br>
-      電話番号　　　：<input type="text" name="tellphone" value=""><br>
-      生年月日　　　：<input type="text" name="birthday" value=""><br>
-      メールアドレス：<input type="text" name="mail_Address" value=""><br>
+      ID　　　　　　：<input class="col-sm-4 col-form-label" type="text" name="id" value=""><br>
+      苗字　　　　　：<input class="col-sm-4 col-form-label" type="text" name="lastName" value=""><br>
+      名前　　　　　：<input class="col-sm-4 col-form-label" type="text" name="firstName" value=""><br>
+      住所　　　　　：<input class="col-sm-4 col-form-label" type="text" name="address" value=""><br>
+      電話番号　　　：<input class="col-sm-4 col-form-label" type="text" name="tellphone" value=""><br>
+      生年月日　　　：<input class="col-sm-4 col-form-label" type="text" name="birthday" value=""><br>
+      メールアドレス：<input class="col-sm-4 col-form-label" type="text" name="mail_Address" value=""><br>
       </p>
       会員のステータス：
       <input type="radio" name="inout" value="1" checked="checked">会員
       <input type="radio" name="inout" value="2">退会済み会員
 
       <br><br>
-      <input type="submit" value="検索"><br>
+      <input class="btn btn-primary" type="submit" value="検索"><br>
       <input type="hidden" name="action" value="search">
     </form>
 <!--

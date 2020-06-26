@@ -24,7 +24,7 @@
 	<input type="hidden" name="book_id" value="${book_id}">
 	<input type="hidden" name="book_name" value="${book_name}">
 	<input type="hidden" name="action" value="delete">
-	<input type="submit" value="削除を確定する">
+	<input class="btn btn-primary" type="submit" value="削除を確定する">
 </form>
 </body>
 </html>

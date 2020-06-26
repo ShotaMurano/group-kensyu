@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>資料の予約</title>
 <jsp:include page="../header.jsp" />
+<style>
+form {padding: 10px;}
+h1 { padding: 10px;}
+input{ 10px; margin: 10px}
+</style>
 </head>
 <body>
 <jsp:include page="../body.jsp" />
@@ -28,8 +33,8 @@
 <form action="/group-kensyu/BookManageServlet" method="post">
 <input type="hidden" name="book_id" value="${book_id}">
 <input type="hidden" name="book_name" value="${book_name}">
-会員ID 　　　　　：<input type="text" name="id" value="">
-<input type="submit" value="入力">
+会員ID：<input class="col-sm-4 col-form-label" type="text" name="id" value=""><br>
+<input class="btn btn-primary" type="submit" value="入力">
 <input type="hidden" name="action" value="preorderCheck">
 
 </form>

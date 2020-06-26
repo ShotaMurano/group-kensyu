@@ -6,13 +6,18 @@
 <meta charset="UTF-8">
 <title>Logout</title>
 <jsp:include page="/header.jsp" />
+<style>
+form {padding: 10px;}
+h1 { padding: 10px;}
+input{ 10px; margin: 10px}
+</style>
 </head>
 <body>
 <h1>ログアウト確認</h1>
 <jsp:include page="/body.jsp" />
 <form action="/group-kensyu/LoginServlet" method="post">
 				<input type="hidden" name="action" value="logout">
-				<input type="submit" value="ログアウト">
+				<input class="btn btn-primary" type="submit" value="ログアウト">
 				</form>
 
 </body>

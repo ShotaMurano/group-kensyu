@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>返却資料検索</title>
 <jsp:include page="../header.jsp" />
+<link rel="stylesheet" href="../css/form-button.css" type="text/css">
 </head>
 <body>
 <jsp:include page="../body.jsp" />
@@ -16,7 +17,7 @@
 
     <form action="/group-kensyu/BookManageServlet" method="post">
       <br><br>
-      <input type="submit" value="返却資料検索">
+      <input class="btn btn-primary" type="submit" value="返却資料検索">
       <input type="hidden" name="action" value="searchReturnedBook">
       <br>
     </form>

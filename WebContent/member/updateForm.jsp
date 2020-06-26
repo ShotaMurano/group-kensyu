@@ -41,6 +41,11 @@ if (id != 0){
     <meta charset="utf-8">
     <title>会員情報変更</title>
 <jsp:include page="../header.jsp" />
+<style>
+	form {padding: 10px;}
+	h1 { padding: 10px;}
+	input{ 10px; margin: 10px}
+</style>
 </head>
 <body>
 <jsp:include page="../body.jsp" />
@@ -48,15 +53,15 @@ if (id != 0){
     <hr>
     <form action="/group-kensyu/MemberServlet" method="post">
  	<input type="hidden" name="id" value="<%= String.valueOf(id)%>">
-      苗字　　　　　：<input type="text" name="lastName" value="<%= lastName %>">
-      名前　　　　　：<input type="text" name="firstName" value="<%= firstName %>"><br>
-      住所　　　　　：<input type="text" name="address" value="<%= address %>"><br>
-      電話番号　　　：<input type="text" name="tellphone" value="<%= tellphone %>"><br>
-      メールアドレス：<input type="text" name="mailAddress" value="<%= mailAddress %>"><br>
-      生年月日　　　：<input type="text" name="birthday" value="<%= birthday %>"><br>
-      退会年月日　　：<input type="text" name="outDate" value="<%= outDate %>"><br>
+      苗字　　　　　：<input class="col-sm-4 col-form-label" type="text" name="lastName" value="<%= lastName %>">　
+      名前：<input class="col-sm-4 col-form-label" type="text" name="firstName" value="<%= firstName %>"><br>
+      住所　　　　　：<input class="col-sm-4 col-form-label" type="text" name="address" value="<%= address %>"><br>
+      電話番号　　　：<input class="col-sm-4 col-form-label" type="text" name="tellphone" value="<%= tellphone %>"><br>
+      メールアドレス：<input class="col-sm-4 col-form-label" type="text" name="mailAddress" value="<%= mailAddress %>"><br>
+      生年月日　　　：<input class="col-sm-4 col-form-label" type="text" name="birthday" value="<%= birthday %>"><br>
+      退会年月日　　：<input class="col-sm-4 col-form-label" type="text" name="outDate" value="<%= outDate %>"><br>
      <input type="hidden" name="action" value="updateResults">
-      <input type="submit" name="" value="確認画面へ"><br>
+      <input class="btn btn-primary" type="submit" name="" value="確認画面へ"><br>
     </form>
   </body>
 </html>
