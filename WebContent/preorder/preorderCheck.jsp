@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>予約最終確認</title>
 <jsp:include page="../header.jsp" />
+<style>
+form {padding: 10px;}
+h1 { padding: 10px;}
+input{ 10px; margin: 10px}
+</style>
 </head>
 <body>
 <jsp:include page="../body.jsp" />
@@ -31,7 +36,7 @@
 	<input type="hidden" name="book_name" value="${book_name}">
 	<input type="hidden" name="id" value="${id}">
 	<input type="hidden" name="action" value="preorder">
-	<input type="submit" value="予約を確定">
+	<input class="btn btn-primary" type="submit" value="予約を確定">
 </form>
 
 </body>

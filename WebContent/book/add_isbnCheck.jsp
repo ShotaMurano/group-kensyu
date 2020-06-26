@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>資料の追加</title>
 <jsp:include page="../header.jsp" />
+<style>
+form {padding: 10px;}
+h1 { padding: 10px;}
+input{ 10px; margin: 10px}
+</style>
+<link rel="stylesheet" href="../css/form-button.css" type="text/css">
 </head>
 <body>
 <jsp:include page="../body.jsp" />
@@ -15,10 +21,10 @@
 
     <form action="/group-kensyu/BookManageServlet" method="post">
       <p>
-      ISBN　　　　　　：<input type="text" name="isbn" required><br>
+      ISBN：<input class="col-sm-4 col-form-label" type="text" name="isbn" required><br>
 
-      <br><br>
-      <input type="submit" value="ISBN検索">
+      <br>
+      <input class="btn btn-primary" type="submit" value="ISBN検索">
        <input type="hidden" name="action" value="isbn_search">
       <br>
     </form>
