@@ -6,10 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>資料検索</title>
+<link rel="stylesheet" href="/group-kensyu/css/header.css" type="text/css">
 </head>
 <body>
-<hr>
-
 	<jsp:include page="search.jsp" />
 	<hr>
 	<table class="table table-hover" border="1">

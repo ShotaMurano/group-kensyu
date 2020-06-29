@@ -6,9 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>返却資料一覧</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
 <h1>返却された資料の一覧</h1>
 <hr>

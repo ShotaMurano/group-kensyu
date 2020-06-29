@@ -6,9 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>確認画面</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
 <h1>本の削除、最終確認画面</h1>
 

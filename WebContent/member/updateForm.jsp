@@ -40,15 +40,12 @@ if (id != 0){
   <head>
     <meta charset="utf-8">
     <title>会員情報変更</title>
-<jsp:include page="../header.jsp" />
-<style>
-	form {padding: 10px;}
-	h1 { padding: 10px;}
-	input{ 10px; margin: 10px}
-</style>
+    <jsp:include page="../image.jsp" />
+<jsp:include page="/header.jsp" />
 </head>
 <body>
-<jsp:include page="../body.jsp" />
+<header></header>
+<jsp:include page="/body.jsp" />
     <h1>会員情報の更新</h1>
     <hr>
     <form action="/group-kensyu/MemberServlet" method="post">

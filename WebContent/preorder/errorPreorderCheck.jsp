@@ -8,11 +8,8 @@
 <jsp:include page="../header.jsp" />
 </head>
 <body>
-<jsp:include page="../body.jsp" />
-
-<h1><font color="red">${message}</font></h1>
 <jsp:include page="/preorder/preorderForm.jsp" />
-
+<h1><font color="red">${message}</font></h1>
 
 </body>
 </html>

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>予約最終確認</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 <style>
 form {padding: 10px;}
@@ -14,6 +15,7 @@ input{ 10px; margin: 10px}
 </style>
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
 
 <h1>予約内容の最終確認</h1>

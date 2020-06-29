@@ -6,10 +6,14 @@
   <head>
     <meta charset="utf-8">
     <title>返却</title>
+    <jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 <link rel="stylesheet" href="../css/form-button.css" type="text/css">
+<style>
+</style>
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
     <h1>返却入力</h1>
 
