@@ -12,7 +12,8 @@
 
 	<jsp:include page="search.jsp" />
 	<hr>
-	<table border="1">
+	<table class="table table-hover" border="1">
+	<thead class="thead-dark">
 		<tr>
 			<th>ID</th>
 			<th>ISBN番号</th>

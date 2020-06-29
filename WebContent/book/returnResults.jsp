@@ -12,7 +12,8 @@
 <jsp:include page="7_1_book_return_info_V2.jsp" />
     <hr>
 	<h2>返却処理が完了しました</h2>
-	<table border="1">
+	<table class="table table-hover" border="1">
+	<thead class="thead-dark">
 		<tr>
 			<th>資料ID</th>
 			<th>ユーザID</th>
