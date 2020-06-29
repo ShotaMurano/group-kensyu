@@ -12,7 +12,8 @@
 <jsp:include page="rental.jsp" />
 	<hr>
 	<h2>貸出処理が完了しました</h2>
-	<table border="1">
+	<table class="table table-hover" border="1">
+	<thead class="thead-dark">
 		<tr>
 			<th>貸出ID</th>
 			<th>資料ID</th>

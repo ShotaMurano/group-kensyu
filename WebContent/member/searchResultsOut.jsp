@@ -13,7 +13,8 @@
 
 
 
-	<table border="1">
+	<table class="table table-hover" border="1">
+	<thead class="thead-dark">
 		<tr>
 			<th>ID</th>
 	        <th>苗字</th>
