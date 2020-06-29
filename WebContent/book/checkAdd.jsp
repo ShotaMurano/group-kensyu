@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>資料の追加</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 <link rel="stylesheet" href="../css/form-button.css" type="text/css">
 <style>
@@ -14,6 +15,7 @@ input{ 10px; margin: 10px}
 </style>
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
     <h1>資料の追加</h1>
 <hr>

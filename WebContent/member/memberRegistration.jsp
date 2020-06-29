@@ -8,7 +8,6 @@
 <title>会員検索</title>
 </head>
 <body>
-
 	<jsp:include page="search.jsp" />
 	<hr>
 	<table border="1">

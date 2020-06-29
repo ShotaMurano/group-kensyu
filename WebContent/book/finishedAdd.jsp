@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>資料の追加</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
     <h1>資料の追加</h1>
 <hr>

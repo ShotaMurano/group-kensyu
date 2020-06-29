@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>資料情報の変更</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 <style>
 form {padding: 10px;}
@@ -14,6 +15,7 @@ input{ 10px; margin: 10px}
 </style>
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
 <h1>資料情報の変更</h1>
 

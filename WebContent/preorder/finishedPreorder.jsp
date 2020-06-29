@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>予約完了</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
 <hr>
 

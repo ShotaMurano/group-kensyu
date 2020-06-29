@@ -5,6 +5,7 @@
   <head>
     <meta charset="utf-8">
     <title>新規会員登録</title>
+    <jsp:include page="../image.jsp" />
     <jsp:include page="/header.jsp" />
     <style>
 	form {padding: 10px;}
@@ -13,6 +14,7 @@
 	</style>
   </head>
   <body>
+  <header></header>
   <jsp:include page="/body.jsp" />
     <h1>新規会員登録ページ</h1>
 

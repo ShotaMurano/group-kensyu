@@ -5,10 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>返却資料検索</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 <link rel="stylesheet" href="../css/form-button.css" type="text/css">
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
 
  <h1>返却された資料検索</h1>

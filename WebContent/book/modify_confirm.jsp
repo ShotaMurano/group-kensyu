@@ -6,9 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>情報更新</title>
+<jsp:include page="../image.jsp" />
 <jsp:include page="../header.jsp" />
 </head>
 <body>
+<header></header>
 <jsp:include page="../body.jsp" />
 <h1>本の情報更新、完了画面</h1>
 <h2>本の情報を以下の通り変更しました</h2>
