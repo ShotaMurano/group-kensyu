@@ -15,7 +15,8 @@
 <h1>本の情報更新、完了画面</h1>
 <h2>本の情報を以下の通り変更しました</h2>
 
-<table border="1">
+<table class="table table-hover" border="1">
+	<thead class="thead-dark">
 	<tr>
 		<th>ISBN</th>
 		<th>資料名</th>

@@ -10,7 +10,9 @@
 </head>
 <body>
 	<jsp:include page="search.jsp" />
-	<table border="1">
+	<hr>
+	<table class="table table-hover" border="1">
+	<thead class="thead-dark">
 		<tr>
 			<th>ID</th>
 			<th>ISBN番号</th>

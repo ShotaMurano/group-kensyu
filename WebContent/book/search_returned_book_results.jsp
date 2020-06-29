@@ -14,7 +14,8 @@
 <jsp:include page="../body.jsp" />
 <h1>返却された資料の一覧</h1>
 <hr>
-	<table border="1">
+	<table class="table table-hover" border="1">
+	<thead class="thead-dark">
 		<tr>
 			<th>ID</th>
 			<th>ISBN番号</th>
